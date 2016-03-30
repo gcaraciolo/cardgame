@@ -42,15 +42,15 @@ public class Char {
         return life > 0;
     }
     
-    public void increaseLife(int value) {
+    public void increaseLife(int life) {
         this.life += life;
     }
     
-    public void increaseAttack(int value) {
-        this.attack += value;
+    public void increaseAttack(int attack) {
+        this.attack += attack;
     }
     
-    public void increaseDefense(int value) {
-        this.defense += value;
+    public void increaseDefense(int defense) {
+        this.defense += defense;
     }
 }
