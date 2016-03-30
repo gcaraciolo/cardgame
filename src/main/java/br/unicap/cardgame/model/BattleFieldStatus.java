@@ -2,27 +2,27 @@ package br.unicap.cardgame.model;
 
 public class BattleFieldStatus {
 
-    private Player player1, player;    
+    private PlayerFighter player1, player2;    
 
-    public BattleFieldStatus(Player player1, Player player) {
+    public BattleFieldStatus(PlayerFighter player1, PlayerFighter player2) {
         this.player1 = player1;
-        this.player = player;        
+        this.player2 = player2;        
     }
     
-    public Player getPlayer1() {
+    public PlayerFighter getPlayer1() {
         return player1;
     }
 
-    public void setPlayer1(Player player1) {
-        this.player1 = player1;
+    public void setPlayer1(PlayerFighter player) {
+        this.player1 = player;
     }
 
-    public Player getPlayer() {
-        return player;
+    public PlayerFighter getPlayer() {
+        return player2;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setPlayer(PlayerFighter player) {
+        this.player2 = player;
     }
 
 }
