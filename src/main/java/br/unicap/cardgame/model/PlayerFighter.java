@@ -40,7 +40,7 @@ public class PlayerFighter extends Player {
 
     public void receiveCard(Card card) {        
         card.doAction(this.getCharacter());
-        availableCards.remove(card);
+        availableCards.remove(card);//TODO
     }
     
     

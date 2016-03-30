@@ -51,7 +51,7 @@ public class BattleField {
     }
     
     private PlayerFighter getOpponentPlayer() {
-        return opponentPlayer == player1 ? player2 : player1;        
+        return opponentPlayer == player2 ? player1 : player2;        
     }
     
     public List<Player> connectedPlayers() {   

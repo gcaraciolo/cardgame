@@ -23,8 +23,7 @@ public class Card {
                 break;
             case 2:
                 character.increaseDefense(10);
-                break;
-                
+                break;                
             case 3: 
                 character.increaseLife(10);
                 break;                
