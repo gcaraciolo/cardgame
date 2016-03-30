@@ -33,10 +33,10 @@ public class BattleField {
     }
     
     public void move(Player player, Card card) {
-        if(currentPlayer.getUsername() == player.getUsername())
-            currentPlayer.receiveCard(card);  
-        
-        round();
+        if(currentPlayer.getUsername().equals(player.getUsername())){
+            currentPlayer.receiveCard(card);          
+            round();
+        }
     }
     
     public void round() {
