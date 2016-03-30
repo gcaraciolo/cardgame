@@ -27,6 +27,17 @@ public class BattleField {
         }
     }
     
+    public void removePlayer(Player player) {
+        if(player.getUsername().equals(currentPlayer.getUsername()) ||
+           player.getUsername().equals(opponentPlayer.getUsername()) ) {
+                //fechar jogo                
+                currentPlayer = opponentPlayer = player1 = player2 = null;
+        } else if(audience.contains(player)) {
+            audience.remove(player);
+        }
+    }
+    
+    
     public void configGame() {               
         currentPlayer = player1;
         opponentPlayer = player2;          
