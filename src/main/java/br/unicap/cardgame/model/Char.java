@@ -12,6 +12,9 @@ public class Char {
 
     public Char(int type) {
         this.type = type;
+        this.life = 5;
+        this.attack = 1;
+        this.defense = 2;
     }
     
     public int getLife() {
@@ -42,7 +45,7 @@ public class Char {
         return life > 0;
     }
     
-    public void increaseLife(int life) {
+    public void increaseLife(int life) {        
         this.life += life;
     }
     
@@ -53,4 +56,9 @@ public class Char {
     public void increaseDefense(int defense) {
         this.defense += defense;
     }
+    
+    public void decreaseLife(int attack) {
+        this.life = this.life - attack;
+    }
+    
 }

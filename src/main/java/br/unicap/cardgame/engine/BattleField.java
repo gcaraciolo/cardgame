@@ -34,7 +34,19 @@ public class BattleField {
     
     public void move(Player player, Card card) {
         if(currentPlayer.getUsername().equals(player.getUsername())){
-            currentPlayer.receiveCard(card);          
+            switch(card.getType()) {
+                case 1:
+                    currentPlayer.getCharacter().increaseLife(1);
+                    break;
+                case 2:
+                    opponentPlayer.getCharacter().decreaseLife(currentPlayer.getCharacter().getAttack());
+                    break;                    
+                case 3:
+                    currentPlayer.getCharacter().increaseAttack(1);
+                    break;
+                default:
+                    break;
+            }                               
             round();
         }
     }

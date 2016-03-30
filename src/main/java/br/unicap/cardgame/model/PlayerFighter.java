@@ -39,8 +39,7 @@ public class PlayerFighter extends Player {
     }
 
     public void receiveCard(Card card) {        
-        card.doAction(this.getCharacter());
-        availableCards.remove(card);//TODO
+        card.doAction(this.getCharacter());        
     }
     
     
