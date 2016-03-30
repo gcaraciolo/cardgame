@@ -7,6 +7,14 @@ public class Card {
     public Card(int type) {
         this.type = type;
     }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
     
     public void doAction(Char character) {
         switch(type) {

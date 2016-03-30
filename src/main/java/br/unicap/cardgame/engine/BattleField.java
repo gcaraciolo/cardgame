@@ -40,7 +40,7 @@ public class BattleField {
     
     public void round() {
         //boolean quem pode jogar ou nao
-        if(currentPlayer.getCharacter().isAlive() && opponentPlayer.getCharacter().isAlive());
+//        if(currentPlayer.getCharacter().isAlive() && opponentPlayer.getCharacter().isAlive());
         
         currentPlayer = getCurrentPlayer();
         opponentPlayer = getOpponentPlayer();
@@ -54,10 +54,6 @@ public class BattleField {
         return opponentPlayer == player1 ? player2 : player1;        
     }
     
-    private boolean isAllPlayersAlive() {
-        return player1.getCharacter().isAlive() && player2.getCharacter().isAlive();
-    }
-    
     public List<Player> connectedPlayers() {   
         List<Player> playersOnline = new ArrayList<>();
         if(player1 != null) playersOnline.add(player1);
@@ -67,6 +63,7 @@ public class BattleField {
     }
     
     public BattleFieldStatus status() {
+        if(player1 == null || player2 == null) return null;
         BattleFieldStatus status = new BattleFieldStatus(player1, player2);
         return status;
     }
