@@ -32,8 +32,9 @@ public class BattleField {
         opponentPlayer = player2;          
     }
     
-    public void move(Card card) {
-        currentPlayer.receiveCard(card);  
+    public void move(Player player, Card card) {
+        if(currentPlayer.getUsername() == player.getUsername())
+            currentPlayer.receiveCard(card);  
         
         round();
     }
