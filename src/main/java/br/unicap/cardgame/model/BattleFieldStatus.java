@@ -1,32 +1,28 @@
 package br.unicap.cardgame.model;
 
-import java.io.Serializable;
+public class BattleFieldStatus {
 
-public class BattleFieldStatus implements Serializable {
+    private PlayerFighter currentPlayer, opponentPlayer;    
 
-    private PlayerFighter player1, player2;    
-
-    public BattleFieldStatus(PlayerFighter player1, PlayerFighter player2) {
-        this.player1 = player1;
-        this.player2 = player2;        
+    public BattleFieldStatus(PlayerFighter currentPlayer, PlayerFighter opponentPlayer) {
+        this.currentPlayer = currentPlayer;
+        this.opponentPlayer = opponentPlayer;
     }
 
-    public PlayerFighter getPlayer1() {
-        return player1;
+    public PlayerFighter getCurrentPlayer() {
+        return currentPlayer;
     }
 
-    public void setPlayer1(PlayerFighter player1) {
-        this.player1 = player1;
+    public void setCurrentPlayer(PlayerFighter currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
-    public PlayerFighter getPlayer2() {
-        return player2;
+    public PlayerFighter getOpponentPlayer() {
+        return opponentPlayer;
     }
 
-    public void setPlayer2(PlayerFighter player2) {
-        this.player2 = player2;
+    public void setOpponentPlayer(PlayerFighter opponentPlayer) {
+        this.opponentPlayer = opponentPlayer;
     }
-    
-    
 
 }

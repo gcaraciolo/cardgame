@@ -1,7 +1,6 @@
 package br.unicap.cardgame.ws;
 
 import br.unicap.cardgame.engine.BattleField;
-import br.unicap.cardgame.model.Char;
 import br.unicap.cardgame.model.Player;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -22,8 +21,9 @@ public class LeaveGameWS {
     @Produces(MediaType.APPLICATION_JSON)    
     public Response leave(@FormParam("username") @NotNull String username) {        
         Player player = new Player(username);
-        battleField.removePlayer(player);
-        return Response.status(200).entity(username + " did leave with sucessfull").build();
+        boolean removed = battleField.removePlayer(player);
+        String successfull = removed ? "did leave with successfull" : " is not online";
+        return Response.status(200).entity(username + successfull).build();
     }   
     
 }
