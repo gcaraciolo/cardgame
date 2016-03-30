@@ -1,17 +1,19 @@
 package br.unicap.cardgame.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerFighter extends Player {
 
     private Char character;    
     private List<Card> availableCards;
-    private List<Card> cardsSelecteds;
+    private List<Card> cardsInGame;
         
     public PlayerFighter(String username, Char character) {
         super(username);
         this.character = character;        
         availableCards = Deck.randonCards();
+        cardsInGame = new ArrayList<>();
     }
 
     public Char getCharacter() {
@@ -22,26 +24,37 @@ public class PlayerFighter extends Player {
         this.character = character;
     }
 
-    public List<Card> getCardsAvailable() {
+    public List<Card> getAvailableCards() {
         return availableCards;
     }
 
-    public void setCardsAvailable(List<Card> availableCards) {
+    public void setAvailableCards(List<Card> availableCards) {
         this.availableCards = availableCards;
     }
 
-    public List<Card> getCardsSelecteds() {
-        return cardsSelecteds;
+    public List<Card> getCardsInGame() {
+        return cardsInGame;
     }
 
-    public void setCardsSelecteds(List<Card> cardsSelecteds) {
-        this.cardsSelecteds = cardsSelecteds;
-    }
+    public void setCardsInGame(List<Card> cardsInGame) {
+        this.cardsInGame = cardsInGame;
+    }  
 
     public void receiveCard(Card card) {        
         card.doAction(this.getCharacter());        
     }
     
+    public void addCardToAvailableCards(Card card) {
+        if(availableCards.size() < 3) {
+            availableCards.add(card);
+        }
+    }
     
+    public void putCardInGame(int position) {
+        Card card = availableCards.get(position);
+        availableCards.remove(position);
+        cardsInGame.add(card);
+        
+    }
     
 }

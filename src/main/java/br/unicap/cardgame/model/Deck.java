@@ -2,17 +2,31 @@ package br.unicap.cardgame.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Deck {
     
-    /**
-     * 
-     * @return 3 cartas randomicas
-     */
+    public static List<Card> cards = staticCards();
+    
+    
     public static List<Card> randonCards() {
-        return staticCards().subList(0, 2);
+        int rand = ThreadLocalRandom.current().nextInt(0, cards.size());
+        int rand1 = ThreadLocalRandom.current().nextInt(0, cards.size());
+        int rand2 = ThreadLocalRandom.current().nextInt(0, cards.size());
+        
+        List<Card> randon = new ArrayList<>();
+        randon.add(cards.get(rand));
+        randon.add(cards.get(rand1));
+        randon.add(cards.get(rand2));
+        
+        return randon;
     }
     
+    public static Card randonCard() {
+        int rand = ThreadLocalRandom.current().nextInt(0, cards.size());
+        return cards.get(rand);
+    }
+          
     private static List<Card> staticCards() {
         
         Card card1 = new Card(1);

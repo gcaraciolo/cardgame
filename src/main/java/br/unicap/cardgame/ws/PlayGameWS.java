@@ -6,20 +6,21 @@ import javax.ejb.EJB;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/move")
-public class BattleFieldMoveWS {
+@Path("/path")
+public class PlayGameWS {
     
     @EJB
-    BattleField battleField;
+    private BattleField battleField;
     
     @POST
-    public Response move(@FormParam("username") String username,
-                         @FormParam("position") int position) {
-                
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response play(@FormParam("username") String username) {
         Player player = new Player(username);
-        battleField.move(player, position);        
+        battleField.play(player);
         return Response.status(200).build();
     }
 }

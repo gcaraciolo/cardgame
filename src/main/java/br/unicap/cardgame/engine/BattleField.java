@@ -3,6 +3,7 @@ package br.unicap.cardgame.engine;
 import br.unicap.cardgame.model.BattleFieldStatus;
 import br.unicap.cardgame.model.Card;
 import br.unicap.cardgame.model.Char;
+import br.unicap.cardgame.model.Deck;
 import br.unicap.cardgame.model.Player;
 import br.unicap.cardgame.model.PlayerFighter;
 import java.util.ArrayList;
@@ -43,29 +44,30 @@ public class BattleField {
         currentPlayer = opponentPlayer = null;
     }
    
-    public void move(Player player, Card card) {
-        if(currentPlayer.getUsername().equals(player.getUsername())){
-            switch(card.getType()) {
-                case 1:
-                    currentPlayer.getCharacter().increaseLife(1);
-                    break;
-                case 2:
-                    opponentPlayer.getCharacter().decreaseLife(currentPlayer.getCharacter().getAttack());
-                    break;                    
-                case 3:
-                    currentPlayer.getCharacter().increaseAttack(1);
-                    break;
-                default:
-                    break;
-            }                               
-            round();
+    public void move(Player player, int position) {
+        if(!isEverybodyAlive()) return;
+        if(canMove(player)) {
+            currentPlayer.putCardInGame(position);            
         }
     }
     
-    public void round() {   
+    public void play(Player player) {   
+        if(canMove(player)) {
+            //play.. pega cartas do deck, faz alguma coisa com o currentPlayer e com o opponentPLayer.
+            
+            //swap
+            swapPlayers();       
+        }
+    }
+    
+    public void swapPlayers() {
         PlayerFighter swap = currentPlayer;
         currentPlayer = opponentPlayer;
         opponentPlayer = swap;
+    }
+    
+    public boolean isEverybodyAlive() {
+        return currentPlayer.getCharacter().isAlive() && opponentPlayer.getCharacter().isAlive();
     }
     
     public List<Player> connectedPlayers() {   
@@ -81,5 +83,15 @@ public class BattleField {
         BattleFieldStatus status = new BattleFieldStatus(currentPlayer, opponentPlayer);
         return status;
     }
+    
+    public void getCardFromDeck(Player player) {
+        if(canMove(player)) {
+            Card card = Deck.randonCard();
+            currentPlayer.addCardToAvailableCards(card);
+        }        
+    }
         
+    public boolean canMove(Player player) {
+        return player.equals(currentPlayer);
+    }
 }

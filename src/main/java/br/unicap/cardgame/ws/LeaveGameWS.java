@@ -2,7 +2,7 @@ package br.unicap.cardgame.ws;
 
 import br.unicap.cardgame.engine.BattleField;
 import br.unicap.cardgame.model.Player;
-import javax.inject.Inject;
+import javax.ejb.EJB;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 @Path("/leave")
 public class LeaveGameWS {
     
-    @Inject
+    @EJB
     private BattleField battleField;    
     
     @POST    
