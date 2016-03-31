@@ -10,8 +10,8 @@ public class Char {
     public Char(int type) {
         this.type = type;
         this.life = 5;
-        this.attack = 1;
-        this.defense = 2;
+        this.attack = 3;
+        this.defense = 1;
     }
     
     public int getLife() {
