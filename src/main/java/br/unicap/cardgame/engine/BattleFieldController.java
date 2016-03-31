@@ -2,6 +2,7 @@ package br.unicap.cardgame.engine;
 
 import br.unicap.cardgame.model.BattleFieldStatus;
 import br.unicap.cardgame.model.Player;
+import br.unicap.cardgame.util.Constants;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -37,8 +38,8 @@ public class BattleFieldController {
        
     public void move(Player player, int position) {                  
         if(!isEverybodyAlive()) return;
-        if(canMove(player)) {
-            battleField.move(player, position);
+        if(canMove(player) && canPutCardInGame()) {
+            battleField.move(position);
         }
     }
      
@@ -67,6 +68,10 @@ public class BattleFieldController {
     private boolean isEverybodyAlive() {
         return battleField.getCurrentPlayer().getCharacter().isAlive() && 
                battleField.getOpponentPlayer().getCharacter().isAlive();
+    }
+    
+    private boolean canPutCardInGame() {
+        return battleField.getCurrentPlayer().getCardsInGame().size() < Constants.MAX_CARDS_IN_GAME;
     }
     
 }

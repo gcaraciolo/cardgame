@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("/status")
-public class BattleFieldStatusWS {
+public class StatusGameWS {
 
     @EJB
     private BattleFieldController battleFieldController;

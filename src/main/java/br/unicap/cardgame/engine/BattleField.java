@@ -57,7 +57,7 @@ public class BattleField {
         audience.remove(player);               
     }
         
-    public void move(Player player, int position) {        
+    public void move(int position) {        
         currentPlayer.putCardInGame(position);   
     }      
             

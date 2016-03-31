@@ -6,7 +6,8 @@ public class Utils {
     
     public static int getRandomNumber(int min, int max) {
         Random random = new Random();
-        return min + random.nextInt((max - min) + 1);
+        int number = min + random.nextInt((max - 1) - min);
+        return number;
     }
     
 }

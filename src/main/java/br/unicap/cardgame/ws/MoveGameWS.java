@@ -9,7 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
 @Path("/move")
-public class BattleFieldMoveWS {
+public class MoveGameWS {
     
     @EJB
     private BattleFieldController battleFieldController;

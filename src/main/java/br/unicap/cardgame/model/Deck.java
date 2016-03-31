@@ -24,14 +24,13 @@ public class Deck {
           
     private static List<Card> staticCards() {
         
-        Card card1 = new Card(1, 0, 0);
-        Card card2 = new Card(2, 0, 0);
-        Card card3 = new Card(0, 1, 0);
-        Card card4 = new Card(0, 2, 0);
-        Card card5 = new Card(0, 0, 1);
-        Card card6 = new Card(0, 0, 2);
-        
-        
+        Card card1 = new Card(1, 0, 0, "Math", "2 + 2 = ?", "1", "2", "3", "4", 3);
+        Card card2 = new Card(1, 0, 0, "Math", "5 * 5 = ?", "13", "27", "25", "20", 2);
+        Card card3 = new Card(1, 0, 0, "Geography", "Qual a capital de pernambuco?", "Sanharó", "Recife", "Caruaru", "Salgueiro", 1);
+        Card card4 = new Card(1, 0, 0, "History", "Quem era o cabeça dos nazistas?", "Adolf Hitler", "Barak Obama", "Dilma Rousseff", "Xi Jinping", 0);
+        Card card5 = new Card(1, 0, 0, "History", "Quem descobriu o Brasil?", "Pedro Álvares Cabral", "Donald Trump", "Mark Zuckemberg", "Nelon Barbosa", 3);
+        Card card6 = new Card(1, 0, 0, "Science", "Baleia é um?", "Peixe", "Reptil", "Mamifero", "Ave", 2);
+                
         List<Card> all = new ArrayList<>();
         all.add(card1);
         all.add(card2);

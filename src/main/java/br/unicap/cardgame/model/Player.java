@@ -33,7 +33,7 @@ public class Player {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof Player)) {
             return false;
         }
         final Player other = (Player) obj;
