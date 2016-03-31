@@ -7,14 +7,17 @@ import br.unicap.cardgame.model.Deck;
 import br.unicap.cardgame.model.Player;
 import br.unicap.cardgame.model.PlayerFighter;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import javax.ejb.Singleton;
 
 @Singleton
 public class BattleField {
     
     private PlayerFighter currentPlayer, opponentPlayer;
-    private List<Player> audience = new ArrayList<>();
+    private Queue<Player> audience = new LinkedList<>();
+    
         
     public void addPlayer(Player player, Char character) {
         if (currentPlayer == null) {
@@ -42,22 +45,32 @@ public class BattleField {
     
     public void finishGame() {
         currentPlayer = opponentPlayer = null;
+//        currentPlayer = audience.poll(); // como saver o character?
+//        opponentPlayer = audience.poll();
     }
    
     public void move(Player player, int position) {
         if(!isEverybodyAlive()) return;
         if(canMove(player)) {
-            currentPlayer.putCardInGame(position);            
+            currentPlayer.putCardInGame(position);   
+            Card card = currentPlayer.popCard();
+            currentPlayer.getCharacter().silviugay(card);
+            
+            int f = currentPlayer.getCharacter().getAttack() - opponentPlayer.getCharacter().getDefense();
+            int v = opponentPlayer.getCharacter().getLife() - f;
+            opponentPlayer.getCharacter().setLife(v);
+            
+            swapPlayers();
         }
     }
     
     public void play(Player player) {   
-        if(canMove(player)) {
-            //play.. pega cartas do deck, faz alguma coisa com o currentPlayer e com o opponentPLayer.
-            
-            //swap
-            swapPlayers();       
-        }
+//        if(canMove(player)) {
+//            //play.. pega cartas em jogo, faz alguma coisa com o currentPlayer e com o opponentPLayer.
+//            
+//            //swap
+//            swapPlayers();       
+//        }
     }
     
     public void swapPlayers() {

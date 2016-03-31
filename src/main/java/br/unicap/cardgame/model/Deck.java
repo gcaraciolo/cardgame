@@ -10,6 +10,7 @@ public class Deck {
     
     
     public static List<Card> randonCards() {
+     
         int rand = ThreadLocalRandom.current().nextInt(0, cards.size());
         int rand1 = ThreadLocalRandom.current().nextInt(0, cards.size());
         int rand2 = ThreadLocalRandom.current().nextInt(0, cards.size());
@@ -29,12 +30,12 @@ public class Deck {
           
     private static List<Card> staticCards() {
         
-        Card card1 = new Card(1);
-        Card card2 = new Card(2);
-        Card card3 = new Card(3);
-        Card card4 = new Card(1);
-        Card card5 = new Card(2);
-        Card card6 = new Card(3);
+        Card card1 = new Card(1, 0, 0);
+        Card card2 = new Card(2, 0, 0);
+        Card card3 = new Card(0, 1, 0);
+        Card card4 = new Card(0, 2, 0);
+        Card card5 = new Card(0, 0, 1);
+        Card card6 = new Card(0, 0, 2);
         
         
         List<Card> all = new ArrayList<>();

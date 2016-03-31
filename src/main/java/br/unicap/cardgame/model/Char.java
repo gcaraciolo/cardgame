@@ -2,12 +2,9 @@ package br.unicap.cardgame.model;
 
 public class Char {
     
-    private int type;
-    
-    private int life;
-    
-    private int attack;
-           
+    private int type;    
+    private int life;    
+    private int attack;           
     private int defense;
 
     public Char(int type) {
@@ -45,20 +42,9 @@ public class Char {
         return life > 0;
     }
     
-    public void increaseLife(int life) {        
-        this.life += life;
+    public void silviugay(Card card) {
+        this.attack += card.getAttack();
+        this.life += card.getLife();
+        this.defense += card.getDefense();                
     }
-    
-    public void increaseAttack(int attack) {
-        this.attack += attack;
-    }
-    
-    public void increaseDefense(int defense) {
-        this.defense += defense;
-    }
-    
-    public void decreaseLife(int attack) {
-        this.life = this.life - attack;
-    }
-    
 }

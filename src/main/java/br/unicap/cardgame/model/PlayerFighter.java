@@ -1,19 +1,20 @@
 package br.unicap.cardgame.model;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class PlayerFighter extends Player {
 
     private Char character;    
     private List<Card> availableCards;
-    private List<Card> cardsInGame;
+    private Queue<Card> cardsInGame;    
         
     public PlayerFighter(String username, Char character) {
         super(username);
         this.character = character;        
         availableCards = Deck.randonCards();
-        cardsInGame = new ArrayList<>();
+        cardsInGame = new LinkedList<>();
     }
 
     public Char getCharacter() {
@@ -32,18 +33,10 @@ public class PlayerFighter extends Player {
         this.availableCards = availableCards;
     }
 
-    public List<Card> getCardsInGame() {
-        return cardsInGame;
+    public Card popCard() {
+        return cardsInGame.poll();
     }
 
-    public void setCardsInGame(List<Card> cardsInGame) {
-        this.cardsInGame = cardsInGame;
-    }  
-
-    public void receiveCard(Card card) {        
-        card.doAction(this.getCharacter());        
-    }
-    
     public void addCardToAvailableCards(Card card) {
         if(availableCards.size() < 3) {
             availableCards.add(card);
@@ -53,8 +46,7 @@ public class PlayerFighter extends Player {
     public void putCardInGame(int position) {
         Card card = availableCards.get(position);
         availableCards.remove(position);
-        cardsInGame.add(card);
-        
+        cardsInGame.add(card);        
     }
     
 }

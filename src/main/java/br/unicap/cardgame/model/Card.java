@@ -2,34 +2,38 @@ package br.unicap.cardgame.model;
 
 public class Card {
     
-    private int type;
-     
-    public Card(int type) {
-        this.type = type;
-    }
+    private int attack;
+    private int defense;
+    private int life;
 
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
+    public Card(int attack, int defense, int life) {
+        this.attack = attack;
+        this.defense = defense;
+        this.life = life;
     }
     
-    public void doAction(Char character) {
-        switch(type) {
-            case 1: 
-                character.increaseAttack(10);
-                break;
-            case 2:
-                character.increaseDefense(10);
-                break;                
-            case 3: 
-                character.increaseLife(10);
-                break;                
-            default:                
-                break;
-        }
-                
+    public int getAttack() {
+        return attack;
     }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public void setDefense(int defense) {
+        this.defense = defense;
+    }
+
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
+
 }
