@@ -14,7 +14,7 @@ public class BattleField {
     
     private PlayerFighter currentPlayer, opponentPlayer, winner;
     private Queue<Player> audience = new LinkedList<>();
-
+    
     /* getters and setters */
     public PlayerFighter getCurrentPlayer() {
         return currentPlayer;
@@ -59,8 +59,6 @@ public class BattleField {
         
     public void move(Player player, int position) {        
         currentPlayer.putCardInGame(position);   
-        play();
-        swapPlayers();
     }      
             
     public void nextFight() { 
@@ -68,10 +66,16 @@ public class BattleField {
         opponentPlayer = createNewPlayerFighter(audience.poll());        
     }
     
-    private void play() {  
+    public void play(int answer) {  
         Card card = currentPlayer.useCardInGame();
-        currentPlayer.getCharacter().increasePower(card);
+        if(card.checkAnswer(answer)) {
+            currentPlayer.getCharacter().increasePower(card);
+            currentPlayer.setMatchLastQuestion(true);
+        } else {
+            currentPlayer.setMatchLastQuestion(false);
+        }
         opponentPlayer.getCharacter().receiveAttack(currentPlayer.getCharacter());               
+        swapPlayers();
     }
     
     private void swapPlayers() {

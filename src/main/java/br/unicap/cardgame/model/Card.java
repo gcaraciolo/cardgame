@@ -35,5 +35,9 @@ public class Card {
     public void setLife(int life) {
         this.life = life;
     }
+    
+    public boolean checkAnswer(int answer) {
+        return true; //TODO
+    }
 
 }

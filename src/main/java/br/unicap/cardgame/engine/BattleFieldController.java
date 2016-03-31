@@ -42,6 +42,13 @@ public class BattleFieldController {
         }
     }
      
+    public void play(Player player, int answer) {                  
+        if(!isEverybodyAlive()) return;
+        if(canMove(player)) {
+            battleField.play(answer);
+        }
+    } 
+    
     public BattleFieldStatus gameStatus() {
         BattleFieldStatus status = null;
         if(battleField.getCurrentPlayer() != null && battleField.getOpponentPlayer() != null) {
