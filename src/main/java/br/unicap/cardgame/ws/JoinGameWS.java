@@ -1,7 +1,6 @@
 package br.unicap.cardgame.ws;
 
-import br.unicap.cardgame.engine.BattleField;
-import br.unicap.cardgame.model.Char;
+import br.unicap.cardgame.engine.BattleFieldController;
 import br.unicap.cardgame.model.Player;
 import javax.ejb.EJB;
 import javax.validation.constraints.NotNull;
@@ -16,15 +15,13 @@ import javax.ws.rs.core.Response;
 public class JoinGameWS {
 
     @EJB
-    private BattleField battleField;    
+    private BattleFieldController battleFieldController;  
     
     @POST    
     @Produces(MediaType.APPLICATION_JSON)    
-    public Response join(@FormParam("username") @NotNull String username, 
-                         @FormParam("charType") @NotNull String charType) {
-        Char character = new Char(Integer.parseInt(charType));
+    public Response join(@FormParam("username") @NotNull String username) {        
         Player player = new Player(username);
-        battleField.addPlayer(player, character);
+        battleFieldController.addPlayer(player);
         return Response.status(200).entity(username + " did join with sucessfull").build();
     }   
     

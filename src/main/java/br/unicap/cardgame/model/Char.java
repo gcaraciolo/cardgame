@@ -42,9 +42,14 @@ public class Char {
         return life > 0;
     }
     
-    public void silviugay(Card card) {
+    public void increasePower(Card card) {
         this.attack += card.getAttack();
         this.life += card.getLife();
         this.defense += card.getDefense();                
+    }
+    
+    public void receiveAttack(Char character) {   
+        int attackDamage = Math.abs(character.getAttack() - defense);
+        life -= attackDamage;        
     }
 }

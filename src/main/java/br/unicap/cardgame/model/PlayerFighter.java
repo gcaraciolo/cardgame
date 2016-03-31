@@ -33,7 +33,7 @@ public class PlayerFighter extends Player {
         this.availableCards = availableCards;
     }
 
-    public Card popCard() {
+    public Card useCardInGame() {
         return cardsInGame.poll();
     }
 
@@ -48,5 +48,5 @@ public class PlayerFighter extends Player {
         availableCards.remove(position);
         cardsInGame.add(card);        
     }
-    
+   
 }

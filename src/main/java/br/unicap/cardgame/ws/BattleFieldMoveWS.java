@@ -1,6 +1,6 @@
 package br.unicap.cardgame.ws;
 
-import br.unicap.cardgame.engine.BattleField;
+import br.unicap.cardgame.engine.BattleFieldController;
 import br.unicap.cardgame.model.Player;
 import javax.ejb.EJB;
 import javax.ws.rs.FormParam;
@@ -12,14 +12,14 @@ import javax.ws.rs.core.Response;
 public class BattleFieldMoveWS {
     
     @EJB
-    BattleField battleField;
+    private BattleFieldController battleFieldController;
     
     @POST
     public Response move(@FormParam("username") String username,
                          @FormParam("position") int position) {
                 
         Player player = new Player(username);
-        battleField.move(player, position);        
+        battleFieldController.move(player, position);        
         return Response.status(200).build();
     }
 }
