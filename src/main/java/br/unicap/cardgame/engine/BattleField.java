@@ -74,7 +74,8 @@ public class BattleField {
         } else {
             currentPlayer.setMatchLastQuestion(false);
         }
-        opponentPlayer.getCharacter().receiveAttack(currentPlayer.getCharacter());               
+        opponentPlayer.getCharacter().receiveAttack(currentPlayer.getCharacter());  
+        getCardFromDeck();
         swapPlayers();
     }
     

@@ -16,7 +16,7 @@ public class BattleFieldController {
 
     public void addPlayer(Player player) {    
         battleField.addAudiencePlayer(player);        
-        if(battleField.getAudience().size() > 1)                
+        if(battleField.getAudience().size() > 1 && isBattleFieldEmpty())                
             battleField.nextFight();
     }
     
@@ -43,10 +43,11 @@ public class BattleFieldController {
         }
     }
      
-    public void play(Player player, int answer) {                  
-        if(!isEverybodyAlive()) return;
+    public void play(Player player, int answer) {                          
         if(canMove(player)) {
             battleField.play(answer);
+            if(!isEverybodyAlive()) 
+                battleField.nextFight();
         }
     } 
     
@@ -74,4 +75,7 @@ public class BattleFieldController {
         return battleField.getCurrentPlayer().getCardsInGame().size() < Constants.MAX_CARDS_IN_GAME;
     }
     
+    private boolean isBattleFieldEmpty() {
+        return battleField.getCurrentPlayer() == null && battleField.getOpponentPlayer() == null;
+    }
 }
