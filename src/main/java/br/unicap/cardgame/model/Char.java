@@ -49,7 +49,8 @@ public class Char {
     }
     
     public void receiveAttack(Char character) {   
-        int attackDamage = Math.abs(character.getAttack() - defense);
-        life -= attackDamage;        
+        int attackDamage = character.getAttack() - defense;
+        if(attackDamage > 0)
+            life -= attackDamage;        
     }
 }
