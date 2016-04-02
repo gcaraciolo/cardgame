@@ -1,7 +1,10 @@
 package br.unicap.cardgame.model;
 
 import java.util.Objects;
+import javax.xml.bind.annotation.XmlRootElement;
 
+
+@XmlRootElement
 public class Player {
         
     private String username;
@@ -43,9 +46,9 @@ public class Player {
         return true;
     }
 
-    
-    
-
-    
+    @Override
+    public String toString() {
+        return "Player{" + "username=" + username + '}';
+    }    
     
 }

@@ -16,7 +16,8 @@ public class PlayerFighter extends Player {
         super(username);
         this.character = character;   
         this.matchLastQuestion = false;
-        setUp();
+        availableCards = Deck.randonCards();
+        cardsInGame = new LinkedList<>();
     }
 
     public Char getCharacter() {
@@ -67,14 +68,4 @@ public class PlayerFighter extends Player {
         cardsInGame.add(card);        
     }
    
-    public void restart() {                          
-        setUp();
-        this.matchLastQuestion = true;
-        character.restart();
-    }
-    
-    private void setUp() {        
-        availableCards = Deck.randonCards();
-        cardsInGame = new LinkedList<>();
-    }
 }
