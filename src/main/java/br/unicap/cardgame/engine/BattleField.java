@@ -71,9 +71,9 @@ public class BattleField {
         opponentPlayer = createNewPlayerFighter(audience.poll());        
     }
     
-    public void play(int answerID) {  
-        Card card = currentPlayer.useCardInGame();        
-        if(checkAnswer(card, answerID)) {
+    public void play(int answer) {  
+        Card card = currentPlayer.useCardInGame();
+        if(card.checkAnswer(answer)) {
             currentPlayer.getCharacter().increasePower(card);
             currentPlayer.setMatchLastQuestion(true);
         } else {
@@ -99,8 +99,4 @@ public class BattleField {
         return new PlayerFighter(player.getUsername(), new Char(1));   //TODO criar aleatoriedade de personagens                         
     }
 
-    private boolean checkAnswer(Card card, int answerID) {
-        int correctAnswer = card.getSubject().getQuestion().getCorrectAnswer().getID();        
-        return correctAnswer == answerID;
-    }
 }
