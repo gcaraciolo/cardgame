@@ -2,6 +2,7 @@ package br.unicap.cardgame.engine;
 
 import br.unicap.cardgame.model.BattleFieldStatus;
 import br.unicap.cardgame.model.Player;
+import br.unicap.cardgame.model.PlayerFighter;
 import br.unicap.cardgame.util.Constants;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class BattleFieldController {
     public void addPlayer(Player player) {    
         battleField.addAudiencePlayer(player);        
         if(hasPlayersToPlay() && isBattleFieldEmpty())                
-            battleField.nextFight();
+            battleField.firstFight();
     }
     
     public void removePlayer(Player player) {
@@ -46,8 +47,14 @@ public class BattleFieldController {
     public void play(Player player, int answer) {                          
         if(canMove(player)) {
             battleField.play(answer);
-            if(!isEverybodyAlive() && hasPlayersToPlay()) 
-                battleField.nextFight();
+            if(!isEverybodyAlive()) {     
+                PlayerFighter winner = whoIsAlive();
+                winner.restart();
+                battleField.setWinner(winner);
+                if(hasNextPlayersToPlay()) 
+                    battleField.nextFight();
+            }
+            
         }
     } 
     
@@ -79,7 +86,18 @@ public class BattleFieldController {
         return battleField.getCurrentPlayer() == null && battleField.getOpponentPlayer() == null;
     }
     
+    private PlayerFighter whoIsAlive() {        
+        if(battleField.getCurrentPlayer().getCharacter().isAlive()) {
+            return battleField.getCurrentPlayer();
+        } 
+        return battleField.getOpponentPlayer();
+    }
+    
     private boolean hasPlayersToPlay() {
         return battleField.getAudience().size() > 1;
+    }
+    
+    private boolean hasNextPlayersToPlay() {
+        return battleField.getAudience().size() > 0;
     }
 }

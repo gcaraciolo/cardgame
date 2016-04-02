@@ -61,8 +61,13 @@ public class BattleField {
         currentPlayer.putCardInGame(position);   
     }      
             
+    public void firstFight() { 
+        currentPlayer = createNewPlayerFighter(audience.poll());        
+        opponentPlayer = createNewPlayerFighter(audience.poll());        
+    }
+    
     public void nextFight() { 
-        currentPlayer = createNewPlayerFighter(audience.poll());
+        currentPlayer = winner;
         opponentPlayer = createNewPlayerFighter(audience.poll());        
     }
     

@@ -9,11 +9,9 @@ public class Char {
 
     public Char(int type) {
         this.type = type;
-        this.life = 5;
-        this.attack = 3;
-        this.defense = 1;
+        setUp();
     }
-    
+
     public int getLife() {
         return life;
     }
@@ -52,5 +50,15 @@ public class Char {
         int attackDamage = character.getAttack() - defense;
         if(attackDamage > 0)
             life -= attackDamage;        
+    }
+    
+    public void restart() {
+        setUp();
+    }
+    
+    private void setUp() {
+        this.life = 5;
+        this.attack = 3;
+        this.defense = 1;
     }
 }
