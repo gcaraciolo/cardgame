@@ -1,8 +1,10 @@
 package br.unicap.cardgame.ws;
 
 import br.unicap.cardgame.engine.BattleFieldController;
+import br.unicap.cardgame.jax.bean.GameStatusJAXBean;
+import br.unicap.cardgame.model.Player;
 import javax.ejb.EJB;
-import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -14,10 +16,11 @@ public class StatusGameWS {
     @EJB
     private BattleFieldController battleFieldController;
     
-    @GET
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response gameStatus() {              
-        return Response.status(200).entity(battleFieldController.gameStatus()).build();
+    public Response gameStatus(GameStatusJAXBean gameStatus) {
+        Player player = new Player(gameStatus.username);
+        return Response.status(200).entity(battleFieldController.gameStatus(player)).build();
     }
     
 }

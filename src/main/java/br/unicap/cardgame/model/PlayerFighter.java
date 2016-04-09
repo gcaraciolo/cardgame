@@ -11,13 +11,14 @@ public class PlayerFighter extends Player {
     private List<Card> availableCards;
     private Queue<Card> cardsInGame;  
     private boolean matchLastQuestion;
+    private boolean timeToPlay;
+    
         
     public PlayerFighter(String username, Char character) {
         super(username);
         this.character = character;   
         this.matchLastQuestion = false;
-        availableCards = Deck.randonCards();
-        cardsInGame = new LinkedList<>();
+        setUp();
     }
 
     public Char getCharacter() {
@@ -52,6 +53,14 @@ public class PlayerFighter extends Player {
         this.matchLastQuestion = matchLastQuestion;
     }
 
+    public boolean isTimeToPlay() {
+        return timeToPlay;
+    }
+
+    public void setTimeToPlay(boolean timeToPlay) {
+        this.timeToPlay = timeToPlay;
+    }
+
     public Card useCardInGame() {
         return cardsInGame.poll();
     }
@@ -67,5 +76,28 @@ public class PlayerFighter extends Player {
         availableCards.remove(position);
         cardsInGame.add(card);        
     }
+    
+    public void restart() {        
+        this.matchLastQuestion = true;
+        character.restart();
+        setUp();                
+    }
    
+    private void setUp() {
+        availableCards = Deck.randonCards();
+        cardsInGame = new LinkedList<>();
+    }
+
+    @Override
+    public String toString() {
+        return  "{" 
+                    + "character:" + character + ","
+                    + "availableCards:" + availableCards + ","
+                    + "cardsInGame:" + cardsInGame + ","
+                    + "matchLastQuestion:" + matchLastQuestion + ","
+                    + "timeToPlay:" + timeToPlay 
+                + "}";
+    }
+    
+    
 }

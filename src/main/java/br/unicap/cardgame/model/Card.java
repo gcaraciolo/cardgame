@@ -5,22 +5,13 @@ public class Card {
     private int attack;
     private int defense;
     private int life;
-    private String subject;
-    private String question;
-    private String a, b, c, d;
-    private int correctAnswer;            
+    private Subject subject;
 
-    public Card(int attack, int defense, int life, String subject, String question, String a, String b, String c, String d, int correctAnswer) {
+    public Card(int attack, int defense, int life, Subject subject) {
         this.attack = attack;
         this.defense = defense;
         this.life = life;
         this.subject = subject;
-        this.question = question;
-        this.a = a;
-        this.b = b;
-        this.c = c;
-        this.d = d;
-        this.correctAnswer = correctAnswer;
     }
 
     public int getAttack() {
@@ -47,64 +38,23 @@ public class Card {
         this.life = life;
     }
 
-    public String getSubject() {
+    public Subject getSubject() {
         return subject;
     }
 
-    public void setSubject(String subject) {
+    public void setSubject(Subject subject) {
         this.subject = subject;
     }
 
-    public String getQuestion() {
-        return question;
+    @Override
+    public String toString() {
+        return  "{" 
+                    + "attack:" + attack + ","
+                    + "defense:" + defense + ","
+                    + "life:" + life + ","
+                    + "subject:" + subject 
+                + "}";
     }
-
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    public String getA() {
-        return a;
-    }
-
-    public void setA(String a) {
-        this.a = a;
-    }
-
-    public String getB() {
-        return b;
-    }
-
-    public void setB(String b) {
-        this.b = b;
-    }
-
-    public String getC() {
-        return c;
-    }
-
-    public void setC(String c) {
-        this.c = c;
-    }
-
-    public String getD() {
-        return d;
-    }
-
-    public void setD(String d) {
-        this.d = d;
-    }
-
-    public int getCorrectAnswer() {
-        return correctAnswer;
-    }
-
-    public void setCorrectAnswer(int correctAnswer) {
-        this.correctAnswer = correctAnswer;
-    }
-   
-    public boolean checkAnswer(int answer) {
-        return this.correctAnswer == answer;        
-    }
+    
 
 }

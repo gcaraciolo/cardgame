@@ -1,0 +1,142 @@
+<section id="dashboard" data-ng-init="init()">
+
+    <div class="row">
+      <div class="col-md-10">
+
+          <div class="row" id="lado">
+            <div class="col-md-12">
+
+                <!-- deck and cartas -->
+                <div class="row">
+                    <div class="col-md-2 mesa">
+                        <div id="carta" class="marrom">
+                            <p>DECK</p>
+                            <!-- <img src="https://yugiohfungame.files.wordpress.com/2013/11/blue-eyes.png" /> -->
+                        </div>
+                    </div>
+                    <div class="col-md-10 mesa">
+                        <div class="row">                          
+                          <div ng-repeat="card in data.opponentPlayer.availableCards">
+                            <div class="grid-carta-mesa">
+                                <div id="carta" class="marrom-claro">
+                                    <p>{{ card.subject.name }}</p>                                    
+                                </div>
+                            </div>
+                          </div>                            
+                        </div> 
+                    </div>
+                </div>
+                <!-- personagens e decoracao -->
+                <div class="row" id="header">
+                    <div class="col-md-6">
+                        <div id="carta"  class="marrom-escuro">
+                            <p>PERSONAGEM</p>
+                            <!-- <img src="https://yugiohfungame.files.wordpress.com/2013/11/blue-eyes.png" /> -->
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="carta"  class="marrom-escuro">
+                            <p>DECORAÇÃO</p>
+                            <!-- <img src="https://yugiohfungame.files.wordpress.com/2013/11/blue-eyes.png" /> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="round" class='on'></div>
+                        <p class='round-texto'>Round 1</p>
+                  </div>
+                </div>
+
+            </div>
+          </div>
+
+          <div class="row" id="lado">
+              <div class="col-md-12">
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <div id="round" class='off'></div>
+                          <p class='round-texto'>Round 2</p>
+                    </div>
+                  </div>
+
+                  <div class="row" id="header">
+                      <div class="col-md-6">
+                          <div id="carta"  class="marrom-escuro">
+                              <p>PERSONAGEM</p>
+                              <!-- <img src="https://yugiohfungame.files.wordpress.com/2013/11/blue-eyes.png" /> -->
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div id="carta"  class="marrom-escuro">
+                              <p>DECORAÇÃO</p>
+                              <!-- <img src="https://yugiohfungame.files.wordpress.com/2013/11/blue-eyes.png" /> -->
+                          </div>
+                      </div>
+                  </div>
+
+                  <!-- deck and cartas -->
+                  <div class="row">
+                      <div class="col-md-2 mesa">
+                          <div id="carta" class="marrom">
+                              <p>DECK</p>
+                              <!-- <img src="https://yugiohfungame.files.wordpress.com/2013/11/blue-eyes.png" /> -->
+                          </div>
+                      </div>
+                      <div class="col-md-10 mesa">
+
+                          <div class="row">
+                            <div ng-repeat="card in data.opponentPlayer.availableCards">
+                                <div class="grid-carta-mesa" ng-click="move($index)">
+                                    <div id="carta" class="marrom-claro">
+                                        <p>{{ card.subject.name }}</p>                                    
+                                    </div>
+                                </div>
+                              </div>  
+                          </div>
+
+                      </div>
+                  </div>
+                  <!-- personagens e decoracao -->
+
+              </div>
+        </div>
+
+      </div>
+      <div class="col-md-2">
+          <div id="audiencia">
+             <h1>Audiência</h1>
+          </div>
+          <ul>
+              <li>Jorge Linhares</li>
+              <li>Sylvio Freire</li>
+              <li>Arthur Feio</li>
+              <li>Diégo</li>
+              <li>Jorge Linhares</li>
+              <li>Sylvio Freire</li>
+              <li>Arthur Feio</li>
+              <li>Diégo</li>
+              <li>Jorge Linhares</li>
+              <li>Sylvio Freire</li>
+              <li>Arthur Feio</li>
+              <li>Diégo</li>
+              <li>Jorge Linhares</li>
+              <li>Sylvio Freire</li>
+              <li>Arthur Feio</li>
+              <li>Diégo</li>
+              <li>Jorge Linhares</li>
+              <li>Sylvio Freire</li>
+              <li>Arthur Feio</li>
+              <li>Diégo</li>
+              <li>Jorge Linhares</li>
+              <li>Sylvio Freire</li>
+              <li>Arthur Feio</li>
+              <li>Diégo</li>
+          </ul>
+      </div>
+    </div>
+
+
+
+</section>

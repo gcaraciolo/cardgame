@@ -9,9 +9,7 @@ public class Char {
 
     public Char(int type) {
         this.type = type;
-        this.life = 5;
-        this.attack = 3;
-        this.defense = 1;
+        setUp();
     }
     
     public int getLife() {
@@ -53,4 +51,26 @@ public class Char {
         if(attackDamage > 0)
             life -= attackDamage;        
     }
+    
+    public void restart() {
+        setUp();
+    }
+    
+    private void setUp() {
+        this.life = 5;
+        this.attack = 3;
+        this.defense = 1;
+    }
+
+    @Override
+    public String toString() {
+        return  "{" 
+                    + "type:" + type + ","
+                    + "life:" + life + ","
+                    + "attack:" + attack + ","
+                    + "defense:" + defense 
+                + "}";
+    }
+    
+    
 }

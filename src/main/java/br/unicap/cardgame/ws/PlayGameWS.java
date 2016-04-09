@@ -1,12 +1,12 @@
 package br.unicap.cardgame.ws;
 
 import br.unicap.cardgame.engine.BattleFieldController;
+import br.unicap.cardgame.jax.bean.PlayGameJAXBean;
 import br.unicap.cardgame.model.Player;
 import javax.ejb.EJB;
-import javax.ws.rs.FormParam;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -17,12 +17,12 @@ public class PlayGameWS {
     private BattleFieldController battleFieldController;
        
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response play(@FormParam("username") String username, 
-                         @FormParam("cardAnswer") int answer) {        
-        Player player = new Player(username);        
-        battleFieldController.play(player, answer);
-        return Response.status(200).build();
+    @Consumes({ MediaType.APPLICATION_JSON })
+    public Response play(PlayGameJAXBean playBean) {        
+        boolean match;
+        Player player = new Player(playBean.username);                
+        match = battleFieldController.play(player, playBean.answerID);
+        return Response.status(200).entity("{\"status\": \"success\", \"response\": \"" + match + "\"}").build();
     }
      
 }

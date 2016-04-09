@@ -1,0 +1,111 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,800,800italic,700italic,600,400italic,600italic);
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body{
+    background: url('../img/bg.png')no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#dashboard{
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#lado{
+    margin-bottom: 20px;
+    background:rgba(0,0,0,0.5);
+    border-radius: 5px;
+}
+
+#audiencia{
+    background-color: #c18349;
+    padding: 5px 0 10px 0;
+    color: #fff;
+    border-radius: 5px 5px 0 0 ;
+}
+#audiencia h1{
+    text-align: center;
+    font-size: 18px;
+}
+ul {
+    list-style-type: none;
+}
+
+ul li{
+    background-color: #262626;
+    padding: 10px;
+    margin: 3px 0;
+    color: #ccc;
+    font-weight: 300;
+}
+
+.grid-carta-deck{
+    width: 20%;
+    float: left;
+}
+
+#header{
+    margin: 50px 0;
+    clear: both;
+}
+
+#carta{
+    width: 150px;
+    height: 200px;
+    margin: 0 auto;
+    border-radius: 3px;
+    box-shadow: 0 0 40px #000;
+}
+#carta img{
+    width: 100%;
+}
+#carta p{
+    padding-top: 90px;
+    text-align: center;
+    color: #fff;
+}
+.grid-carta-mesa{
+    width: 20%;
+    float: left;
+}
+.mesa{
+    margin: 25px 0;
+}
+
+.marrom{
+    background-color: #c18349;
+}
+.marrom-escuro{
+    background-color: #6b4424;
+}
+.marrom-claro{
+    background-color: #b5835a;
+}
+
+#round{
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    margin: 20px 10px 20px 0px;
+    float: left;
+}
+.on{
+    background-color: #db2727;
+    border: 2px solid #fff;
+}
+.off{
+    background-color: none;
+    border: 2px solid #fff;
+}
+.round-texto{
+    padding: 35px 0 0 0;
+    color: #fff;
+}

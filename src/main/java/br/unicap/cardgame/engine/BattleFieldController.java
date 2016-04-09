@@ -2,9 +2,11 @@ package br.unicap.cardgame.engine;
 
 import br.unicap.cardgame.model.BattleFieldStatus;
 import br.unicap.cardgame.model.Player;
+import br.unicap.cardgame.model.PlayerFighter;
 import br.unicap.cardgame.util.Constants;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -16,17 +18,18 @@ public class BattleFieldController {
 
     public void addPlayer(Player player) {    
         battleField.addAudiencePlayer(player);        
-        if(hasPlayersToPlay() && isBattleFieldEmpty())                
-            battleField.nextFight();
+        if(hasPlayersToPlay() && isBattleFieldEmpty()) {                
+            battleField.firstFight();            
+        }
     }
     
     public void removePlayer(Player player) {
-        if(player.equals(battleField.getCurrentPlayer())) {
-            battleField.setCurrentPlayer(null);
-            battleField.setWinner(battleField.getOpponentPlayer());
-        } else if(player.equals(battleField.getOpponentPlayer())) {
-            battleField.setCurrentPlayer(null);
-            battleField.setWinner(battleField.getCurrentPlayer());
+        if(player.equals(battleField.getPlayer1())) {
+            battleField.setPlayer1(null);
+            battleField.setWinner(battleField.getPlayer2());
+        } else if(player.equals(battleField.getPlayer2())) {
+            battleField.setPlayer2(null);
+            battleField.setWinner(battleField.getPlayer1());
         } else if(battleField.getAudience().contains(player)) {
             battleField.removeAudiencePlayer(player);
         }        
@@ -43,21 +46,50 @@ public class BattleFieldController {
         }
     }
      
-    public void play(Player player, int answer) {                          
+    public boolean play(Player player, int answer) {                          
+        boolean match = false;
         if(canMove(player)) {
-            battleField.play(answer);
-            if(!isEverybodyAlive() && hasPlayersToPlay()) 
-                battleField.nextFight();
+            match = battleField.play(answer);
+            if(!isEverybodyAlive()) {     
+                 nextBattle();
+             }
         }
+        return match;
     } 
     
-    public BattleFieldStatus gameStatus() {
-        BattleFieldStatus status = null;
-        if(battleField.getCurrentPlayer() != null && battleField.getOpponentPlayer() != null) {
-            status = new BattleFieldStatus(battleField.getCurrentPlayer(), battleField.getOpponentPlayer());
-        } else if(battleField.getWinner() != null) {
-            status = new BattleFieldStatus(battleField.getWinner());
+    private void nextBattle() {
+        PlayerFighter winner = whoIsAlive();
+        winner.restart();
+        battleField.setWinner(winner);
+        if(hasNextPlayersToPlay()) {
+            battleField.nextFight();
         }
+    }
+    
+     private PlayerFighter whoIsAlive() {        
+         if(battleField.getPlayer1().getCharacter().isAlive()) {
+             return battleField.getPlayer1();
+         } 
+         return battleField.getPlayer2();
+     }
+    
+    public BattleFieldStatus gameStatus(Player requester) {
+        BattleFieldStatus status = null;        
+        PlayerFighter p1 = null, p2 = null;
+        Queue<Player> audience = null;
+        if(battleField.getPlayer1() != null && battleField.getPlayer2() != null) {             
+            if(requester.getUsername().equals(battleField.getPlayer1().getUsername())) {
+                p1 = battleField.getPlayer1();
+                p2 = battleField.getPlayer2();                                    
+                audience = battleField.getAudience();
+            } else if(requester.getUsername().equals(battleField.getPlayer2().getUsername()) || battleField.getAudience().contains(requester)) {
+                p1 = battleField.getPlayer2();
+                p2 = battleField.getPlayer1();
+                audience = battleField.getAudience();
+            } 
+            
+        }
+        status = new BattleFieldStatus(p1, p2, audience);
         return status;
     }    
 
@@ -67,8 +99,8 @@ public class BattleFieldController {
     }
     
     private boolean isEverybodyAlive() {
-        return battleField.getCurrentPlayer().getCharacter().isAlive() && 
-               battleField.getOpponentPlayer().getCharacter().isAlive();
+        return battleField.getPlayer1().getCharacter().isAlive() && 
+               battleField.getPlayer2().getCharacter().isAlive();
     }
     
     private boolean canPutCardInGame() {
@@ -76,10 +108,15 @@ public class BattleFieldController {
     }
     
     private boolean isBattleFieldEmpty() {
-        return battleField.getCurrentPlayer() == null && battleField.getOpponentPlayer() == null;
+        return battleField.getPlayer1() == null && 
+               battleField.getPlayer2() == null;
     }
     
     private boolean hasPlayersToPlay() {
         return battleField.getAudience().size() > 1;
     }
+    private boolean hasNextPlayersToPlay() {
+         return battleField.getAudience().size() > 0;
+     }
+    
 }
