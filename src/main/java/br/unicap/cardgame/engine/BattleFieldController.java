@@ -68,6 +68,7 @@ public class BattleFieldController {
         battleField.setWinner(winner);
         if(hasNextPlayersToPlay()) {
             battleField.nextFight();
+            winner.setTimeToPlay(true);
         }
     }
     
