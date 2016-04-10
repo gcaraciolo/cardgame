@@ -17,6 +17,11 @@ public class BattleFieldController {
     private BattleField battleField;
 
     public void addPlayer(Player player) {    
+        if(alreadyJoinned(player, battleField.getPlayer1()) 
+        || alreadyJoinned(player, battleField.getPlayer2())
+        || battleField.getAudience().contains(player)) {
+            return;
+        }            
         battleField.addAudiencePlayer(player);        
         if(hasPlayersToPlay() && isBattleFieldEmpty()) {                
             battleField.firstFight();            
@@ -115,8 +120,12 @@ public class BattleFieldController {
     private boolean hasPlayersToPlay() {
         return battleField.getAudience().size() > 1;
     }
+    
     private boolean hasNextPlayersToPlay() {
          return battleField.getAudience().size() > 0;
-     }
+    }
     
+    private boolean alreadyJoinned(Player player, PlayerFighter fighter) {
+        return fighter != null && player.getUsername().equals(fighter.getUsername());                
+    }
 }
