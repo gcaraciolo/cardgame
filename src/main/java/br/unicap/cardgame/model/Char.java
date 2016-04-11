@@ -57,9 +57,9 @@ public class Char {
     }
     
     private void setUp() {
-        this.life = 5;
-        this.attack = 3;
-        this.defense = 1;
+        this.life = 15;
+        this.attack = 4;
+        this.defense = 2;
     }
 
     @Override
