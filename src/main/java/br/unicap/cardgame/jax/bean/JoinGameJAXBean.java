@@ -8,5 +8,8 @@ public class JoinGameJAXBean {
 
     @XmlElement(name="username")
     public String username;
+    
+    @XmlElement(name="age")
+    public int age;
         
 }
