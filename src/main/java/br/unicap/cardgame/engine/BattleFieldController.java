@@ -81,21 +81,32 @@ public class BattleFieldController {
     } 
     
     private void nextBattle() {
-        PlayerFighter winner = whoIsAlive();
+        PlayerFighter winner;
+       
+        winner = whoIsAlive();        
         winner.restart();
-        battleField.setWinner(winner);
+        removeLoster();
+        battleField.setWinner(winner);        
         if(hasNextPlayersToPlay()) {
             battleField.nextFight();
             winner.setTimeToPlay(true);
         }
     }
     
-     private PlayerFighter whoIsAlive() {        
-         if(battleField.getPlayer1().getCharacter().isAlive()) {
-             return battleField.getPlayer1();
-         } 
-         return battleField.getPlayer2();
-     }
+    private PlayerFighter whoIsAlive() {        
+        if(battleField.getPlayer1().getCharacter().isAlive()) {
+            return battleField.getPlayer1();
+        } 
+        return battleField.getPlayer2();
+    }
+    
+    private void removeLoster() {
+        if(battleField.getPlayer1().getCharacter().getLife() <= 0) {
+            battleField.setPlayer1(null);
+        } else if (battleField.getPlayer2().getCharacter().getLife() <= 0) {
+            battleField.setPlayer2(null);
+        }  
+    }
     
     public CardGameResponse gameStatus(Player requester) {
         BattleFieldStatus status = null;        
