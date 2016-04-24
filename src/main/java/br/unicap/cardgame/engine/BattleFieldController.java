@@ -15,51 +15,71 @@ public class BattleFieldController {
     
     @EJB
     private BattleField battleField;
+    
+    private String response(boolean status, int code, Object msg) {
+        return "{" + 
+                    "status: " + status + "," +
+                    "code: " + code + "," +
+                    "message: " + msg +
+                "}";
+    }
 
-    public void addPlayer(Player player) {    
+    public String addPlayer(Player player) {    
         if(alreadyJoinned(player, battleField.getPlayer1()) 
         || alreadyJoinned(player, battleField.getPlayer2())
         || battleField.getAudience().contains(player)) {
-            return;
+            return response(true, 1001, "usarname already online");
         }            
         battleField.addAudiencePlayer(player);        
         if(hasPlayersToPlay() && isBattleFieldEmpty()) {                
-            battleField.firstFight();            
+            battleField.firstFight();
+            return response(true, 1000, "Start fight");
         }
+        return response(true, 1002, "You're in the audience");
     }
     
-    public void removePlayer(Player player) {
+    public String removePlayer(Player player) {
         if(player.equals(battleField.getPlayer1())) {
-            battleField.setPlayer1(null);
-            battleField.setWinner(battleField.getPlayer2());
+            battleField.getPlayer1().getCharacter().setLife(0);
+            nextBattle();
+            return response(true, 1003, "You're lost. " + battleField.getPlayer2().getUsername() + " win.");
         } else if(player.equals(battleField.getPlayer2())) {
-            battleField.setPlayer2(null);
-            battleField.setWinner(battleField.getPlayer1());
+            battleField.getPlayer2().getCharacter().setLife(0);
+            nextBattle();
+            return response(true, 1004, "You're lost. " + battleField.getPlayer1().getUsername() + " win.");            
         } else if(battleField.getAudience().contains(player)) {
             battleField.removeAudiencePlayer(player);
+            return response(true, 1005, "Left from audience");
         }        
+        return response(true, 1006, "You're not online");
     }
     
-    public List<Player> connectedPlayers() {
-        return new ArrayList<>(battleField.getAudience());        
+    public String connectedPlayers() {
+        return response(true, 1007, new ArrayList<>(battleField.getAudience()));        
     }
        
-    public void move(Player player, int position) {                  
-        if(!isEverybodyAlive()) return;
+    public String move(Player player, int position) {                  
+        if(!isEverybodyAlive()) { 
+            return response(true, 1008, "Nobody online.");
+        }
         if(canMove(player) && canPutCardInGame()) {
             battleField.move(position);
+            return response(true, 1009, "Moved with success.");
         }
+        return response(true, 1010, "It's not your time.");
     }
      
-    public boolean play(Player player, int answer) {                          
+    public String play(Player player, int answer) {                          
         boolean match = false;
         if(canMove(player)) {
             match = battleField.play(answer);
             if(!isEverybodyAlive()) {     
-                 nextBattle();
-             }
+                nextBattle();
+                return response(true, 1011, "You win");
+            }
+            return response(true, 1012, match);
         }
-        return match;
+        return response(true, 1013, "It's not your time.");
     } 
     
     private void nextBattle() {
@@ -79,24 +99,23 @@ public class BattleFieldController {
          return battleField.getPlayer2();
      }
     
-    public BattleFieldStatus gameStatus(Player requester) {
+    public String gameStatus(Player requester) {
         BattleFieldStatus status = null;        
         PlayerFighter p1 = null, p2 = null;
         Queue<Player> audience = null;
-        if(battleField.getPlayer1() != null && battleField.getPlayer2() != null) {             
-            if(requester.getUsername().equals(battleField.getPlayer1().getUsername())) {
-                p1 = battleField.getPlayer1();
-                p2 = battleField.getPlayer2();                                    
-                audience = battleField.getAudience();
-            } else if(requester.getUsername().equals(battleField.getPlayer2().getUsername()) || battleField.getAudience().contains(requester)) {
-                p1 = battleField.getPlayer2();
-                p2 = battleField.getPlayer1();
-                audience = battleField.getAudience();
-            } 
-            
+        
+        audience = battleField.getAudience();
+        if(battleField.getPlayer1() != null && 
+           requester.getUsername().equals(battleField.getPlayer1().getUsername())) {
+           p1 = battleField.getPlayer1();
+           p2 = battleField.getPlayer2();
+        } else if(battleField.getPlayer2() != null &&
+           requester.getUsername().equals(battleField.getPlayer2().getUsername())) {
+           p1 = battleField.getPlayer2();
+           p2 = battleField.getPlayer1();
         }
         status = new BattleFieldStatus(p1, p2, audience);
-        return status;
+        return response(true, 1014, status);
     }    
 
     //helper methods

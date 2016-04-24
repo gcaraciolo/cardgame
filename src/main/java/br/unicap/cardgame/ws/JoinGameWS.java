@@ -20,9 +20,12 @@ public class JoinGameWS {
     @POST    
     @Consumes({ MediaType.APPLICATION_JSON })
     public Response join(JoinGameJAXBean joinBean) {        
-        Player player = new Player(joinBean.username);
-        battleFieldController.addPlayer(player);
-        return Response.status(200).build();
+        String response;
+        Player player;
+                
+        player = new Player(joinBean.username);        
+        response = battleFieldController.addPlayer(player);
+        return Response.status(200).entity(response).build();
     }   
     
 }

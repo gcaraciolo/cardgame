@@ -19,9 +19,12 @@ public class LeaveGameWS {
     @POST    
     @Consumes({ MediaType.APPLICATION_JSON })
     public Response leave(LeaveGameJAXBean leaveGame) {        
-        Player player = new Player(leaveGame.username);
-        battleFieldController.removePlayer(player);        
-        return Response.status(200).build();
+        String response;
+        Player player;        
+        
+        player = new Player(leaveGame.username);
+        response = battleFieldController.removePlayer(player);        
+        return Response.status(200).entity(response).build();
     }   
     
 }

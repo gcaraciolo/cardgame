@@ -19,8 +19,11 @@ public class MoveGameWS {
     @POST    
     @Consumes({ MediaType.APPLICATION_JSON })
     public Response move(MoveGameJAXBean moveBean) {                        
-        Player player = new Player(moveBean.username);
-        battleFieldController.move(player, moveBean.position);                
-        return Response.status(200).build();
+        String response;
+        Player player;
+        
+        player = new Player(moveBean.username);
+        response = battleFieldController.move(player, moveBean.position);                
+        return Response.status(200).entity(response).build();
     }
 }

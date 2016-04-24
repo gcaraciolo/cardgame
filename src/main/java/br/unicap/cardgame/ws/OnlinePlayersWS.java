@@ -17,7 +17,10 @@ public class OnlinePlayersWS {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response playersOnline() {        
-        return Response.status(200).entity(battleFieldController.connectedPlayers()).build();
+        String response;
+        
+        response = battleFieldController.connectedPlayers();
+        return Response.status(200).entity(response).build();
     }
     
 }

@@ -19,8 +19,12 @@ public class StatusGameWS {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response gameStatus(GameStatusJAXBean gameStatus) {
-        Player player = new Player(gameStatus.username);
-        return Response.status(200).entity(battleFieldController.gameStatus(player)).build();
+        String response;
+        Player player;
+        
+        player = new Player(gameStatus.username);
+        response = battleFieldController.gameStatus(player);
+        return Response.status(200).entity(response).build();
     }
     
 }

@@ -19,10 +19,12 @@ public class PlayGameWS {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     public Response play(PlayGameJAXBean playBean) {        
-        boolean match;
-        Player player = new Player(playBean.username);                
-        match = battleFieldController.play(player, playBean.answerID);
-        return Response.status(200).entity("{\"status\": \"success\", \"response\": \"" + match + "\"}").build();
+        String response;        
+        Player player;
+        
+        player = new Player(playBean.username);                
+        response = battleFieldController.play(player, playBean.answerID);
+        return Response.status(200).entity(response).build();
     }
      
 }
