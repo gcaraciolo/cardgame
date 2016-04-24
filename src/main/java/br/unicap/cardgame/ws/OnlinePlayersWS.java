@@ -1,6 +1,7 @@
 package br.unicap.cardgame.ws;
 
 import br.unicap.cardgame.engine.BattleFieldController;
+import br.unicap.cardgame.ws.response.CardGameResponse;
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -15,9 +16,9 @@ public class OnlinePlayersWS {
     private BattleFieldController battleFieldController;
        
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({ MediaType.APPLICATION_JSON })
     public Response playersOnline() {        
-        String response;
+        CardGameResponse response;
         
         response = battleFieldController.connectedPlayers();
         return Response.status(200).entity(response).build();

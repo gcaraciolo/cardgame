@@ -4,11 +4,12 @@ import br.unicap.cardgame.model.BattleFieldStatus;
 import br.unicap.cardgame.model.Player;
 import br.unicap.cardgame.model.PlayerFighter;
 import br.unicap.cardgame.util.Constants;
+import br.unicap.cardgame.ws.response.CardGameResponse;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Queue;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.smartcardio.CardChannel;
 
 @Stateless
 public class BattleFieldController {
@@ -16,15 +17,12 @@ public class BattleFieldController {
     @EJB
     private BattleField battleField;
     
-    private String response(boolean status, int code, Object msg) {
-        return "{" + 
-                    "status: " + status + "," +
-                    "code: " + code + "," +
-                    "message: " + msg +
-                "}";
+    private CardGameResponse response(boolean status, int code, Object msg) {
+        CardGameResponse response = new CardGameResponse(status, code, msg);
+        return response;
     }
 
-    public String addPlayer(Player player) {    
+    public CardGameResponse addPlayer(Player player) {    
         if(alreadyJoinned(player, battleField.getPlayer1()) 
         || alreadyJoinned(player, battleField.getPlayer2())
         || battleField.getAudience().contains(player)) {
@@ -38,7 +36,7 @@ public class BattleFieldController {
         return response(true, 1002, "You're in the audience");
     }
     
-    public String removePlayer(Player player) {
+    public CardGameResponse removePlayer(Player player) {
         if(player.equals(battleField.getPlayer1())) {
             battleField.getPlayer1().getCharacter().setLife(0);
             nextBattle();
@@ -54,11 +52,11 @@ public class BattleFieldController {
         return response(true, 1006, "You're not online");
     }
     
-    public String connectedPlayers() {
+    public CardGameResponse connectedPlayers() {
         return response(true, 1007, new ArrayList<>(battleField.getAudience()));        
     }
        
-    public String move(Player player, int position) {                  
+    public CardGameResponse move(Player player, int position) {                  
         if(!isEverybodyAlive()) { 
             return response(true, 1008, "Nobody online.");
         }
@@ -69,7 +67,7 @@ public class BattleFieldController {
         return response(true, 1010, "It's not your time.");
     }
      
-    public String play(Player player, int answer) {                          
+    public CardGameResponse play(Player player, int answer) {                          
         boolean match = false;
         if(canMove(player)) {
             match = battleField.play(answer);
@@ -99,7 +97,7 @@ public class BattleFieldController {
          return battleField.getPlayer2();
      }
     
-    public String gameStatus(Player requester) {
+    public CardGameResponse gameStatus(Player requester) {
         BattleFieldStatus status = null;        
         PlayerFighter p1 = null, p2 = null;
         Queue<Player> audience = null;

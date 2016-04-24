@@ -3,6 +3,7 @@ package br.unicap.cardgame.ws;
 import br.unicap.cardgame.engine.BattleFieldController;
 import br.unicap.cardgame.jax.bean.GameStatusJAXBean;
 import br.unicap.cardgame.model.Player;
+import br.unicap.cardgame.ws.response.CardGameResponse;
 import javax.ejb.EJB;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -19,7 +20,7 @@ public class StatusGameWS {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response gameStatus(GameStatusJAXBean gameStatus) {
-        String response;
+        CardGameResponse response;
         Player player;
         
         player = new Player(gameStatus.username);
