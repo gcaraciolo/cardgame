@@ -41,7 +41,11 @@ public class BattleFieldController {
     
     public CardGameResponse removePlayer(Player player) {
         PlayerFighter winner;
-        if(player.equals(battleField.getPlayer1())) {            
+        if(player.equals(battleField.getPlayer1())) { 
+            if(battleField.getPlayer2() == null) {
+                battleField.setPlayer1(null);
+                return response(true, 1016, "Nobody else online.");
+            }
             battleField.getPlayer1().getCharacter().setLife(0);
             winner = battleField.getPlayer2();
             nextBattle();

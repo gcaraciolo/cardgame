@@ -66,6 +66,7 @@ public class BattleField {
     public void nextFight() {          
          player1 = winner;
          player2 = createNewPlayerFighter(audience.poll());        
+         player1.setTimeToPlay(true);        
     }
     
     public boolean play(int answerID) {  
