@@ -81,7 +81,8 @@ public class BattleFieldController {
         boolean match = false;
         if(canMove(player)) {
             match = battleField.play(answer);
-            if(!isEverybodyAlive()) {     
+            if(!isEverybodyAlive()) {
+                battleField.setLoster(loster());
                 nextBattle();
                 return response(true, 1011, "You win");
             }
@@ -132,6 +133,9 @@ public class BattleFieldController {
            requester.getUsername().equals(battleField.getPlayer2().getUsername())) {
            p1 = battleField.getPlayer2();
            p2 = battleField.getPlayer1();
+        } else if(battleField.getLoster() != null &&
+                requester.getUsername().equals(battleField.getLoster().getUsername())) {
+            return response(true, 1017, "Game over");
         }
         status = new BattleFieldStatus(p1, p2, audience);
         return response(true, 1014, status);
@@ -171,5 +175,12 @@ public class BattleFieldController {
     private boolean hasSomeOneOnline() {
         return (battleField.getPlayer1() != null && battleField.getPlayer2() == null) ||
                (battleField.getPlayer1() == null && battleField.getPlayer2() != null);
+    }
+    
+    private PlayerFighter loster() {
+        if(battleField.getPlayer1().getCharacter().isAlive()) {
+            return battleField.getPlayer2();
+        }
+        return battleField.getPlayer1();
     }
 }

@@ -12,7 +12,7 @@ import javax.ejb.Singleton;
 @Singleton
 public class BattleField {
     
-    private PlayerFighter player1, player2, winner;
+    private PlayerFighter player1, player2, winner, loster;
     private final Queue<Player> audience = new LinkedList<>();
     
     /* getters and setters */        
@@ -44,6 +44,14 @@ public class BattleField {
         this.winner = winner;
     }
 
+    public PlayerFighter getLoster() {
+        return loster;
+    }
+
+    public void setLoster(PlayerFighter loster) {
+        this.loster = loster;
+    }
+    
     /* engine */   
     public void addAudiencePlayer(Player player) {
         audience.add(player);    
