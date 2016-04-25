@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Queue;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.smartcardio.CardChannel;
 
 @Stateless
 public class BattleFieldController {
@@ -27,24 +26,31 @@ public class BattleFieldController {
         || alreadyJoinned(player, battleField.getPlayer2())
         || battleField.getAudience().contains(player)) {
             return response(true, 1001, "usarname already online");
-        }            
+        }
+        
         battleField.addAudiencePlayer(player);        
         if(hasPlayersToPlay() && isBattleFieldEmpty()) {                
             battleField.firstFight();
             return response(true, 1000, "Start fight");
+        } else if(hasSomeOneOnline() && hasNextPlayersToPlay()) {
+            battleField.nextFight();
+            return response(true, 1015, "You're going to fight with " + battleField.getPlayer1().getUsername());
         }
         return response(true, 1002, "You're in the audience");
     }
     
     public CardGameResponse removePlayer(Player player) {
-        if(player.equals(battleField.getPlayer1())) {
+        PlayerFighter winner;
+        if(player.equals(battleField.getPlayer1())) {            
             battleField.getPlayer1().getCharacter().setLife(0);
+            winner = battleField.getPlayer2();
             nextBattle();
-            return response(true, 1003, "You're lost. " + battleField.getPlayer2().getUsername() + " win.");
-        } else if(player.equals(battleField.getPlayer2())) {
+            return response(true, 1003, "You're lost. " + winner.getUsername() + " win.");
+        } else if(player.equals(battleField.getPlayer2())) {            
             battleField.getPlayer2().getCharacter().setLife(0);
+            winner = battleField.getPlayer1();
             nextBattle();
-            return response(true, 1004, "You're lost. " + battleField.getPlayer1().getUsername() + " win.");            
+            return response(true, 1004, "You're lost. " + winner.getUsername() + " win.");            
         } else if(battleField.getAudience().contains(player)) {
             battleField.removeAudiencePlayer(player);
             return response(true, 1005, "Left from audience");
@@ -156,5 +162,10 @@ public class BattleFieldController {
     
     private boolean alreadyJoinned(Player player, PlayerFighter fighter) {
         return fighter != null && player.getUsername().equals(fighter.getUsername());                
+    }
+    
+    private boolean hasSomeOneOnline() {
+        return (battleField.getPlayer1() != null && battleField.getPlayer2() == null) ||
+               (battleField.getPlayer1() == null && battleField.getPlayer2() != null);
     }
 }
