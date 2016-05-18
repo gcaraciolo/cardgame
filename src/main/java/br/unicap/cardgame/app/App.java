@@ -1,4 +1,4 @@
-package br.unicap.cardgame.ws;
+package br.unicap.cardgame.app;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
