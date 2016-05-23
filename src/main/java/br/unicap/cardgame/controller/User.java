@@ -16,17 +16,18 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class User {
 
 	public CardGameResponse authenticate(String username, String password) throws Exception {
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("cardgame");
-		EntityManager manager = factory.createEntityManager();
 
 		Usuarios usuario = Usuario.verificar(username, password);
 
 		if (usuario == null) {
+			System.out.println("usuario nao cadastrado");
 			throw new Exception("Usuário não cadastrado");
 		} else {
 			if (username != usuario.getNome() || password != usuario.getSenha()) {
+				System.out.println("password invalido");
 				throw new Exception("password invalido");
 			}
+			System.out.println("tudo ok com login");
 			String token = Jwts.builder().setSubject(username)
 					.signWith(SignatureAlgorithm.HS512, Utils.APP_CLIENT_SECRET).compact();
 			return new CardGameResponse(true, 100034, token);
