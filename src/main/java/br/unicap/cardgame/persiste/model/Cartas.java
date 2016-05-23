@@ -27,6 +27,7 @@ public class Cartas implements Serializable {
 	private int defesa;
 	private int vida;
 	private int certa;
+	
 	public int getCod() {
 		return cod;
 	}
