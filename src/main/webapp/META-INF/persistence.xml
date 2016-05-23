@@ -6,7 +6,7 @@
     <persistence-unit name="cardgame" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/cardgame"/> 
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.8.82.131:3306/cardgame"/> 
 			<property name="javax.persistence.jdbc.user" value="adminWVtGtdx"/>
 			<property name="javax.persistence.jdbc.password" value="aV1AJ9WNppGZ"/>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
