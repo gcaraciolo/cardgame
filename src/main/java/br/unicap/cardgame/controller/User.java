@@ -23,8 +23,12 @@ public class User {
 			System.out.println("usuario nao cadastrado");
 			throw new Exception("Usuário não cadastrado");
 		} else {
-			if (username != usuario.getNome() || password != usuario.getSenha()) {
+			if (!username.equals(usuario.getNome()) || !password.equals(usuario.getSenha())) {
 				System.out.println("password invalido");
+				System.out.println(username);
+				System.out.println(password);
+				System.out.println(usuario.getNome());
+				System.out.println(usuario.getSenha());
 				throw new Exception("password invalido");
 			}
 			System.out.println("tudo ok com login");
