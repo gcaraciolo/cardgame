@@ -7,41 +7,43 @@ import java.util.Queue;
 
 public class PlayerFighter extends Player {
 
-    private Char character;    
-    private List<Card> availableCards;
-    private Queue<Card> cardsInGame;  
+    private Chars character;    
+    private List<Cards> availableCards;
+    private Queue<Cards> cardsInGame;  
     private boolean matchLastQuestion;
     private boolean timeToPlay;
+    private int life;
+    private int attack;
+    private int defense;
     
-        
-    public PlayerFighter(String username, Char character) {
+    public PlayerFighter(String username, Chars character) {
         super(username);
         this.character = character;   
         this.matchLastQuestion = false;
         setUp();
     }
 
-    public Char getCharacter() {
+    public Chars getCharacter() {
         return character;
     }
 
-    public void setCharacter(Char character) {
+    public void setCharacter(Chars character) {
         this.character = character;
     }
 
-    public List<Card> getAvailableCards() {
+    public List<Cards> getAvailableCards() {
         return availableCards;
     }
 
-    public void setAvailableCards(List<Card> availableCards) {
+    public void setAvailableCards(List<Cards> availableCards) {
         this.availableCards = availableCards;
     }
 
-    public Queue<Card> getCardsInGame() {
+    public Queue<Cards> getCardsInGame() {
         return cardsInGame;
     }
 
-    public void setCardsInGame(Queue<Card> cardsInGame) {
+    public void setCardsInGame(Queue<Cards> cardsInGame) {
         this.cardsInGame = cardsInGame;
     }
 
@@ -61,43 +63,73 @@ public class PlayerFighter extends Player {
         this.timeToPlay = timeToPlay;
     }
 
-    public Card useCardInGame() {
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    public int getAttack() {
+        return attack;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public void setDefense(int defense) {
+        this.defense = defense;
+    }
+
+    public Cards useCardInGame() {
         return cardsInGame.poll();
     }
 
-    public void addCardToAvailableCards(Card card) {
+    public void addCardToAvailableCards(Cards card) {
         if(availableCards.size() < Constants.MAX_AVAILABLE_CARDS) {
             availableCards.add(card);
         }
     }
     
     public void putCardInGame(int position) {
-        Card card = availableCards.get(position);
+        Cards card = availableCards.get(position);
         availableCards.remove(position);
         cardsInGame.add(card);        
     }
     
     public void restart() {        
         this.matchLastQuestion = true;
-        character.restart();
+//        character.restart();
         setUp();                
     }
    
     private void setUp() {
         availableCards = Deck.randonCards();
-        cardsInGame = new LinkedList<>();
-    }
-
-    @Override
-    public String toString() {
-        return  "{" 
-                    + "character:" + character + ","
-                    + "availableCards:" + availableCards + ","
-                    + "cardsInGame:" + cardsInGame + ","
-                    + "matchLastQuestion:" + matchLastQuestion + ","
-                    + "timeToPlay:" + timeToPlay 
-                + "}";
+        cardsInGame = new LinkedList<Cards>();
+        life = 15;
+        attack = 4;
+        defense = 2;
     }
     
+    public boolean isAlive() {
+        return life > 0;
+    }
+    
+    public void increasePower(Cards card) {
+        attack += card.getAttack();
+        life += card.getLife();
+        defense += card.getDefense();                
+    }
+    
+    public void receiveAttack(PlayerFighter opponent) {   
+        int attackDamage = opponent.getAttack() - defense;
+        if(attackDamage > 0) life -= attackDamage;        
+    }
     
 }

@@ -1,7 +1,8 @@
 package br.unicap.cardgame.engine;
 
-import br.unicap.cardgame.model.Card;
-import br.unicap.cardgame.model.Char;
+import br.unicap.cardgame.controller.CardController;
+import br.unicap.cardgame.model.Cards;
+import br.unicap.cardgame.model.Chars;
 import br.unicap.cardgame.model.Deck;
 import br.unicap.cardgame.model.Player;
 import br.unicap.cardgame.model.PlayerFighter;
@@ -13,7 +14,7 @@ import javax.ejb.Singleton;
 public class BattleField {
     
     private PlayerFighter player1, player2, winner, loster;
-    private final Queue<Player> audience = new LinkedList<>();
+    private final Queue<Player> audience = new LinkedList<Player>();
     
     /* getters and setters */        
     public Queue<Player> getAudience() {
@@ -79,12 +80,12 @@ public class BattleField {
     
     public boolean play(int answerID) {  
         boolean match = false;
-        Card card = getCurrentPlayer().useCardInGame();        
-        if(checkAnswer(card, answerID)) {
-            getCurrentPlayer().getCharacter().increasePower(card);            
+        Cards card = getCurrentPlayer().useCardInGame();        
+        if(checkAnswer(card.getId(), answerID)) {
+            getCurrentPlayer().increasePower(card);            
             match = true;
         }
-        getOpponentPlayer().getCharacter().receiveAttack(getCurrentPlayer().getCharacter());  
+        getOpponentPlayer().receiveAttack(getCurrentPlayer());  
         getCardFromDeck();
         swapPlayers();
         return match;
@@ -101,17 +102,18 @@ public class BattleField {
     }
     
     private void getCardFromDeck() {        
-        Card card = Deck.randonCard();
+        Cards card = Deck.randonCard();
         getCurrentPlayer().addCardToAvailableCards(card);                
     }
     
     private PlayerFighter createNewPlayerFighter(Player player) {
-        return new PlayerFighter(player.getUsername(), new Char(1));   //TODO criar aleatoriedade de personagens                         
+        return new PlayerFighter(player.getUsername(), new Chars(1));   //TODO criar aleatoriedade de personagens                         
     }
 
-    private boolean checkAnswer(Card card, int answerID) {
-        int correctAnswer = card.getSubject().getQuestion().getCorrectAnswer().getID();        
-        return correctAnswer == answerID;
+    private boolean checkAnswer(int card_id, int answer_id) {
+        CardController cardController = new CardController();
+        int correctAnswer = cardController.getCorretAnswer(card_id);         
+        return correctAnswer == answer_id;
     }
     
     public PlayerFighter getCurrentPlayer() {

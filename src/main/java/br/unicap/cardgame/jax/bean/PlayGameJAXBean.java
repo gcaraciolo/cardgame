@@ -5,10 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class PlayGameJAXBean {
-    
-    @XmlElement(name="username")
-    public String username;
-    
-    @XmlElement(name="answerID")
+       
+    @XmlElement(name="answer_id")
     public int answerID;
 }

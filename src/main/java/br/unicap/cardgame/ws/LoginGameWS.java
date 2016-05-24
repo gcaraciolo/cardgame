@@ -1,9 +1,8 @@
 package br.unicap.cardgame.ws;
 
-import br.unicap.cardgame.controller.User;
-import br.unicap.cardgame.ws.response.CardGameResponse;
-import br.unicap.cardgame.engine.BattleFieldController;
+import br.unicap.cardgame.controller.UserController;
 import br.unicap.cardgame.jax.bean.LoginGameJAXBean;
+import br.unicap.cardgame.ws.response.CardGameResponseToken;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -16,13 +15,13 @@ import javax.ws.rs.core.Response;
 public class LoginGameWS {
 
     @EJB
-    private User user;
+    private UserController user;
     
     @POST    
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     public Response join(LoginGameJAXBean loginGame) {        
-        CardGameResponse response;        
+        CardGameResponseToken response;        
         try {
             response = user.authenticate(loginGame.username, loginGame.password);
             return Response.status(200).entity(response).build();

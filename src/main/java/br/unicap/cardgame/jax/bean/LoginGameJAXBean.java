@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class LoginGameJAXBean {
     
-    @XmlElement(name = "username")
+    @XmlElement(name="username")
     public String username;
     
     @XmlElement(name = "password")

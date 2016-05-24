@@ -46,12 +46,12 @@ public class BattleFieldController {
                 battleField.setPlayer1(null);
                 return response(true, 1016, "Nobody else online.");
             }
-            battleField.getPlayer1().getCharacter().setLife(0);
+            battleField.getPlayer1().setLife(0);
             winner = battleField.getPlayer2();
             nextBattle();
             return response(true, 1003, "You're lost. " + winner.getUsername() + " win.");
         } else if(player.equals(battleField.getPlayer2())) {            
-            battleField.getPlayer2().getCharacter().setLife(0);
+            battleField.getPlayer2().setLife(0);
             winner = battleField.getPlayer1();
             nextBattle();
             return response(true, 1004, "You're lost. " + winner.getUsername() + " win.");            
@@ -63,7 +63,7 @@ public class BattleFieldController {
     }
     
     public CardGameResponse connectedPlayers() {
-        return response(true, 1007, new ArrayList<>(battleField.getAudience()));        
+        return response(true, 1007, new ArrayList<Player>(battleField.getAudience()));        
     }
        
     public CardGameResponse move(Player player, int position) {                  
@@ -105,16 +105,16 @@ public class BattleFieldController {
     }
     
     private PlayerFighter whoIsAlive() {        
-        if(battleField.getPlayer1().getCharacter().isAlive()) {
+        if(battleField.getPlayer1().isAlive()) {
             return battleField.getPlayer1();
         } 
         return battleField.getPlayer2();
     }
     
     private void removeLoster() {
-        if(battleField.getPlayer1().getCharacter().getLife() <= 0) {
+        if(battleField.getPlayer1().getLife() <= 0) {
             battleField.setPlayer1(null);
-        } else if (battleField.getPlayer2().getCharacter().getLife() <= 0) {
+        } else if (battleField.getPlayer2().getLife() <= 0) {
             battleField.setPlayer2(null);
         }  
     }
@@ -147,8 +147,8 @@ public class BattleFieldController {
     }
     
     private boolean isEverybodyAlive() {
-        return battleField.getPlayer1().getCharacter().isAlive() && 
-               battleField.getPlayer2().getCharacter().isAlive();
+        return battleField.getPlayer1().isAlive() && 
+               battleField.getPlayer2().isAlive();
     }
     
     private boolean canPutCardInGame() {
@@ -178,7 +178,7 @@ public class BattleFieldController {
     }
     
     private PlayerFighter loster() {
-        if(battleField.getPlayer1().getCharacter().isAlive()) {
+        if(battleField.getPlayer1().isAlive()) {
             return battleField.getPlayer2();
         }
         return battleField.getPlayer1();
