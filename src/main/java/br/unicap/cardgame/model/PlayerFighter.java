@@ -1,5 +1,6 @@
 package br.unicap.cardgame.model;
 
+import br.unicap.cardgame.controller.DeckController;
 import br.unicap.cardgame.util.Constants;
 import java.util.LinkedList;
 import java.util.List;
@@ -105,12 +106,10 @@ public class PlayerFighter extends Player {
     
     public void restart() {        
         this.matchLastQuestion = true;
-//        character.restart();
         setUp();                
     }
    
     private void setUp() {
-        availableCards = Deck.randonCards();
         cardsInGame = new LinkedList<Cards>();
         life = 15;
         attack = 4;

@@ -1,5 +1,6 @@
 package br.unicap.cardgame.controller;
 
+import br.unicap.cardgame.model.Chars;
 import br.unicap.cardgame.model.Users;
 import br.unicap.cardgame.util.Utils;
 import javax.ejb.Stateless;
@@ -8,7 +9,6 @@ import br.unicap.cardgame.ws.response.CardGameResponseToken;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
 @Stateless
 public class UserController {
@@ -36,5 +36,22 @@ public class UserController {
         
         private boolean verifyPassword(Users user, String password) {
             return user.getPassword().equals(password);
+        }
+        
+        public Chars getPlayerChar(String username) {
+            Users u = em.createNamedQuery("Users.findByUsername", Users.class)
+                    .setParameter("username", username)
+                    .getSingleResult();
+            Chars c = em.createNamedQuery("Chars.findById", Chars.class)
+                    .setParameter("id", u.getCharId().getId())
+                    .getSingleResult();
+            return c;
+        }
+        
+        public Users getUserByName(String username) {
+            Users u = em.createNamedQuery("Users.findByUsername", Users.class)
+                    .setParameter("username", username)
+                    .getSingleResult();
+            return u;
         }
 }

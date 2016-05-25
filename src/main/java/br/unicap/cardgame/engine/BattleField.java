@@ -1,13 +1,16 @@
 package br.unicap.cardgame.engine;
 
 import br.unicap.cardgame.controller.CardController;
+import br.unicap.cardgame.controller.DeckController;
+import br.unicap.cardgame.controller.UserController;
 import br.unicap.cardgame.model.Cards;
 import br.unicap.cardgame.model.Chars;
-import br.unicap.cardgame.model.Deck;
 import br.unicap.cardgame.model.Player;
 import br.unicap.cardgame.model.PlayerFighter;
+import br.unicap.cardgame.model.Users;
 import java.util.LinkedList;
 import java.util.Queue;
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
 
 @Singleton
@@ -15,6 +18,12 @@ public class BattleField {
     
     private PlayerFighter player1, player2, winner, loster;
     private final Queue<Player> audience = new LinkedList<Player>();
+    
+    @EJB
+    private UserController userController;
+    
+    @EJB
+    private DeckController deckController;
     
     /* getters and setters */        
     public Queue<Player> getAudience() {
@@ -81,7 +90,7 @@ public class BattleField {
     public boolean play(int answerID) {  
         boolean match = false;
         Cards card = getCurrentPlayer().useCardInGame();        
-        if(checkAnswer(card.getId(), answerID)) {
+        if(checkAnswer(card, answerID)) {
             getCurrentPlayer().increasePower(card);            
             match = true;
         }
@@ -101,18 +110,29 @@ public class BattleField {
         }            
     }
     
-    private void getCardFromDeck() {        
-        Cards card = Deck.randonCard();
+    private void getCardFromDeck() {
+        Users u = userController.getUserByName(getCurrentPlayer().getUsername());
+        Cards card = deckController.randonCard(u);
         getCurrentPlayer().addCardToAvailableCards(card);                
     }
     
     private PlayerFighter createNewPlayerFighter(Player player) {
-        return new PlayerFighter(player.getUsername(), new Chars(1));   //TODO criar aleatoriedade de personagens                         
+        Chars c = null;
+        PlayerFighter pf = null;
+        try {
+            c = userController.getPlayerChar(player.getUsername());            
+            pf = new PlayerFighter(player.getUsername(), c);
+            Users u = userController.getUserByName(player.getUsername());
+            pf.setAvailableCards(deckController.randonCards(u));
+        } catch(Exception e) { 
+            System.out.println(e);
+        }
+        return pf;
     }
 
-    private boolean checkAnswer(int card_id, int answer_id) {
+    private boolean checkAnswer(Cards card, int answer_id) {
         CardController cardController = new CardController();
-        int correctAnswer = cardController.getCorretAnswer(card_id);         
+        int correctAnswer = cardController.getCorretAnswer(card);         
         return correctAnswer == answer_id;
     }
     

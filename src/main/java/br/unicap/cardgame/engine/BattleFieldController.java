@@ -16,27 +16,22 @@ public class BattleFieldController {
     @EJB
     private BattleField battleField;
     
-    private CardGameResponse response(boolean status, int code, Object msg) {
-        CardGameResponse response = new CardGameResponse(status, code, msg);
-        return response;
-    }
-
     public CardGameResponse addPlayer(Player player) {    
         if(alreadyJoinned(player, battleField.getPlayer1()) 
         || alreadyJoinned(player, battleField.getPlayer2())
         || battleField.getAudience().contains(player)) {
-            return response(true, 1001, "usarname already online");
+            return new CardGameResponse(true, 1001, "usarname already online");
         }
         
         battleField.addAudiencePlayer(player);        
         if(hasPlayersToPlay() && isBattleFieldEmpty()) {                
             battleField.firstFight();
-            return response(true, 1000, "Start fight");
+            return new CardGameResponse(true, 1000, "Start fight");
         } else if(hasSomeOneOnline() && hasNextPlayersToPlay()) {
             battleField.nextFight();
-            return response(true, 1015, "You're going to fight with " + battleField.getPlayer1().getUsername());
+            return new CardGameResponse(true, 1015, "You're going to fight with " + battleField.getPlayer1().getUsername());
         }
-        return response(true, 1002, "You're in the audience");
+        return new CardGameResponse(true, 1002, "You're in the audience");
     }
     
     public CardGameResponse removePlayer(Player player) {
@@ -44,37 +39,37 @@ public class BattleFieldController {
         if(player.equals(battleField.getPlayer1())) { 
             if(battleField.getPlayer2() == null) {
                 battleField.setPlayer1(null);
-                return response(true, 1016, "Nobody else online.");
+                return new CardGameResponse(true, 1016, "Nobody else online.");
             }
             battleField.getPlayer1().setLife(0);
             winner = battleField.getPlayer2();
             nextBattle();
-            return response(true, 1003, "You're lost. " + winner.getUsername() + " win.");
+            return new CardGameResponse(true, 1003, "You're lost. " + winner.getUsername() + " win.");
         } else if(player.equals(battleField.getPlayer2())) {            
             battleField.getPlayer2().setLife(0);
             winner = battleField.getPlayer1();
             nextBattle();
-            return response(true, 1004, "You're lost. " + winner.getUsername() + " win.");            
+            return new CardGameResponse(true, 1004, "You're lost. " + winner.getUsername() + " win.");            
         } else if(battleField.getAudience().contains(player)) {
             battleField.removeAudiencePlayer(player);
-            return response(true, 1005, "Left from audience");
+            return new CardGameResponse(true, 1005, "Left from audience");
         }        
-        return response(true, 1006, "You're not online");
+        return new CardGameResponse(true, 1006, "You're not online");
     }
     
     public CardGameResponse connectedPlayers() {
-        return response(true, 1007, new ArrayList<Player>(battleField.getAudience()));        
+        return new CardGameResponse(true, 1007, new ArrayList<Player>(battleField.getAudience()));        
     }
        
     public CardGameResponse move(Player player, int position) {                  
         if(!isEverybodyAlive()) { 
-            return response(true, 1008, "Nobody online.");
+            return new CardGameResponse(true, 1008, "Nobody online.");
         }
         if(canMove(player) && canPutCardInGame()) {
             battleField.move(position);
-            return response(true, 1009, "Moved with success.");
+            return new CardGameResponse(true, 1009, "Moved with success.");
         }
-        return response(true, 1010, "It's not your time.");
+        return new CardGameResponse(true, 1010, "It's not your time.");
     }
      
     public CardGameResponse play(Player player, int answer) {                          
@@ -84,11 +79,11 @@ public class BattleFieldController {
             if(!isEverybodyAlive()) {
                 battleField.setLoster(loster());
                 nextBattle();
-                return response(true, 1011, "You win");
+                return new CardGameResponse(true, 1011, "You win");
             }
-            return response(true, 1012, match);
+            return new CardGameResponse(true, 1012, match);
         }
-        return response(true, 1013, "It's not your time.");
+        return new CardGameResponse(true, 1013, "It's not your time.");
     } 
     
     private void nextBattle() {
@@ -135,10 +130,10 @@ public class BattleFieldController {
            p2 = battleField.getPlayer1();
         } else if(battleField.getLoster() != null &&
                 requester.getUsername().equals(battleField.getLoster().getUsername())) {
-            return response(true, 1017, "Game over");
+            return new CardGameResponse(true, 1017, "Game over");
         }
         status = new BattleFieldStatus(p1, p2, audience);
-        return response(true, 1014, status);
+        return new CardGameResponse(true, 1014, status);
     }    
 
     //helper methods
