@@ -1,0 +1,34 @@
+<section id="cardQuestion" type="text/ng-template">
+
+        <div class="modal-header">
+            <h3 class="modal-title">{{cardQuestionText}}</h3>
+        </div>
+        <div class="modal-body">
+              <div class="radio">
+                <ul>
+                  <li ng-repeat="possibleAnswer in cardPossibleAnswers">
+                        <label>
+                          <input type="radio" name="radio" ng-model="$parent.answer" value="{{possibleAnswer.id}}">
+                              {{ possibleAnswer.text }}
+                          </input>
+                        </label>
+                  </li>
+                </ul>
+                <div ng-if="response == true">
+                  <div class="alert alert-success" role="alert">Resposta certa!</div>
+                </div>
+                <div ng-if="response == false">
+                  <div class="alert alert-danger" role="alert">Resposta incorreta</div>
+                </div>
+              </div>
+        </div>
+
+        <div class="modal-footer">
+            <div ng-if="button === 'confirmar'">
+              <button class="btn btn-primary" type="button" ng-click="confirmar(answer)">Confirmar</button>
+            </div>
+            <div ng-if="button === 'atacar'">
+              <button class="btn btn-danger" type="button" ng-click="atacar()">Atacar!</button>
+            </div>
+        </div>
+</section>

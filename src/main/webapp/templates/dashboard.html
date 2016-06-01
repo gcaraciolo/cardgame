@@ -1,0 +1,156 @@
+<section id="dashboard" data-ng-init="init()">
+    <div class="row">
+      <div class="col-md-10">
+
+          <div class="row" id="lado">
+            <div class="col-md-12">
+
+                <!-- deck and cartas -->
+                <div class="row">
+                    <div class="col-md-2 mesa">
+                        <div id="carta" class="marrom">
+                            <img src="img/deck.png"/>
+                            <!-- <p>DECK</p> -->
+                        </div>
+                    </div>
+                    <div class="col-md-10 mesa">
+                        <div class="row">
+                            <div ng-repeat="card in player2.availableCards">
+                                <div class="grid-carta-mesa" ng-click="move(player2.username, $index)">
+                                    <div id="carta" class="marrom-claro">
+
+                                    </div>
+                                </div>
+                              </div>
+                          </div>
+                    </div>
+                </div>
+                <!-- personagens e decoracao -->
+                <div class="row" id="header">
+                    <div class="col-md-6">
+                      <div id="carta"  class="marrom-escuro magician">
+                        <div class="character-labels">
+                          <div class="name">
+                            <p>Magician</p>
+                          </div>
+                          <div class="powers">
+                            <label>{{ player2.attack }}</label>
+                            <label>{{ player2.defense }}</label>
+                            <label>{{ player2.life }}</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="carta"  class="marrom-escuro" ng-class="getCardSubject(player2.cardsInGame[0]);">
+                          <div ng-if="player2.cardsInGame[0]">
+                            <div class="card-labels">
+                              <p>{{ player2.cardsInGame[0].attack }} Ataque </p>
+                              <p>{{ player2.cardsInGame[0].defense }} Defesa </p>
+                              <p>{{ player2.cardsInGame[0].life }} Vida </p>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="round" ng-class="player2.timeToPlay ? 'on' : 'off'"></div>
+                        <p class='round-texto'>{{player2.username}}</p>
+                  </div>
+                </div>
+
+            </div>
+          </div>
+
+
+                              <!-- divisao -->
+
+
+          <div class="row" id="lado">
+              <div class="col-md-12">
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <div id="round" ng-class="player1.timeToPlay ? 'on' : 'off'"></div>
+                          <p class='round-texto'>{{player1.username}}</p>
+                    </div>
+                  </div>
+
+                  <div class="row" id="header">
+                      <div class="col-md-6">
+                          <div id="carta"  class="marrom-escuro gladiator">
+                            <div class="character-labels">
+                              <div class="name">
+                                <p>Gladiator</p>
+                              </div>
+                              <div class="powers">
+                                <label>{{ player1.attack }}</label>
+                                <label>{{ player1.defense }}</label>
+                                <label>{{ player1.life }}</label>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+
+                      <!-- open modal -->
+                      <div class="col-md-6">
+                          <div id="carta"  class="marrom-escuro" ng-click="open(player1.cardsInGame[0])" ng-class="getCardSubject(player1.cardsInGame[0]);">
+                            <div ng-if="player1.cardsInGame[0]">
+                              <div class="card-labels">
+                                <p>{{ player1.cardsInGame[0].attack }} Ataque </p>
+                                <p>{{ player1.cardsInGame[0].defense }} Defesa </p>
+                                <p>{{ player1.cardsInGame[0].life }} Vida </p>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+
+
+                  </div>
+
+                  <!-- deck and cartas -->
+                  <div class="row">
+                      <div class="col-md-2 mesa">
+                          <div id="carta" class="marrom">
+                              <img src="img/deck.png"/>
+                          </div>
+                      </div>
+                      <div class="col-md-10 mesa">
+
+                          <div class="row">
+                            <div ng-repeat="card in player1.availableCards">
+                                <div class="grid-carta-mesa" ng-click="move($index);">
+                                    <div id="carta" class="marrom-claro " ng-class="getCardSubject(card)">
+                                        <div class="card-labels">
+                                          <p>{{ card.attack }} Ataque </p>
+                                          <p>{{ card.defense }} Defesa </p>
+                                          <p>{{ card.life }} Vida </p>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                          </div>
+
+                      </div>
+                  </div>
+                  <!-- personagens e decoracao -->
+
+              </div>
+        </div>
+
+      </div>
+      <div class="col-md-2">
+          <div id="audiencia">
+             <h1>{{onlinePlayers.length}} next players</h1>
+          </div>
+          <ul>
+             <li class="animate-repeat" ng-repeat="onlinePlayer in onlinePlayers">
+                {{onlinePlayer.username}}
+              </li>
+          </ul>
+      </div>
+    </div>
+
+
+</section>
