@@ -1,6 +1,9 @@
 package br.unicap.cardgame.util;
 
+import br.unicap.cardgame.model.Player;
+import com.google.gson.Gson;
 import io.jsonwebtoken.Jwts;
+import static java.lang.Integer.decode;
 import java.util.Random;
 
 public class Utils {
@@ -18,13 +21,26 @@ public class Utils {
     }
     
     public static String getUsername(String token) {
+        Gson gson = new Gson();
         token = token.substring("Bearer".length()).trim();
-        String decode = Jwts.parser()
+        String decodeJson = Jwts.parser()
                 .setSigningKey(Utils.APP_CLIENT_SECRET)
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
-        return decode;
-                
+        Player p = gson.fromJson(decodeJson, Player.class);
+        return p.getUsername();
+    }
+    
+    public static int getUserId(String token) {
+        Gson gson = new Gson();
+        token = token.substring("Bearer".length()).trim();
+        String decodeJson = Jwts.parser()
+                .setSigningKey(Utils.APP_CLIENT_SECRET)
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+        Player p = gson.fromJson(decodeJson, Player.class);
+        return p.getId();
     }
 }

@@ -7,9 +7,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Player {
         
-    private String username;
+    private int id;
+    private String username;    
     
     public Player(String username) {
+        this.username = username;
+    }
+    
+    public Player(int id, String username) {
+        this.id = id;
         this.username = username;
     }
 
@@ -21,6 +27,14 @@ public class Player {
         this.username = username;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -49,6 +63,7 @@ public class Player {
     @Override
     public String toString() {
         return "{" 
+                    + "id:" + id + ","
                     + "username:" + username 
                 + "}";
     }    

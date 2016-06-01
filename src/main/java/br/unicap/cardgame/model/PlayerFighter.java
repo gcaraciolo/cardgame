@@ -1,6 +1,6 @@
 package br.unicap.cardgame.model;
 
-import br.unicap.cardgame.controller.DeckController;
+import br.unicap.cardgame.controller.DecksController;
 import br.unicap.cardgame.util.Constants;
 import java.util.LinkedList;
 import java.util.List;

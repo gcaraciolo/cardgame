@@ -1,6 +1,6 @@
 package br.unicap.cardgame.ws;
 
-import br.unicap.cardgame.controller.UserController;
+import br.unicap.cardgame.controller.UsersController;
 import br.unicap.cardgame.jax.bean.LoginGameJAXBean;
 import br.unicap.cardgame.ws.response.CardGameResponseToken;
 import javax.ejb.EJB;
@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 public class LoginGameWS {
 
     @EJB
-    private UserController user;
+    private UsersController user;
     
     @POST    
     @Consumes({ MediaType.APPLICATION_JSON })

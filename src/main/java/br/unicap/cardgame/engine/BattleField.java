@@ -1,8 +1,9 @@
 package br.unicap.cardgame.engine;
 
-import br.unicap.cardgame.controller.CardController;
-import br.unicap.cardgame.controller.DeckController;
-import br.unicap.cardgame.controller.UserController;
+import br.unicap.cardgame.controller.CardsController;
+import br.unicap.cardgame.controller.CharsController;
+import br.unicap.cardgame.controller.DecksController;
+import br.unicap.cardgame.controller.UsersController;
 import br.unicap.cardgame.model.Cards;
 import br.unicap.cardgame.model.Chars;
 import br.unicap.cardgame.model.Player;
@@ -20,10 +21,13 @@ public class BattleField {
     private final Queue<Player> audience = new LinkedList<Player>();
     
     @EJB
-    private UserController userController;
+    private UsersController usersController;
     
     @EJB
-    private DeckController deckController;
+    private CharsController charsController;
+    
+    @EJB
+    private DecksController decksController;
     
     /* getters and setters */        
     public Queue<Player> getAudience() {
@@ -111,8 +115,8 @@ public class BattleField {
     }
     
     private void getCardFromDeck() {
-        Users u = userController.getUserByName(getCurrentPlayer().getUsername());
-        Cards card = deckController.randonCard(u);
+        Users u = usersController.getUserByUsername(getCurrentPlayer().getUsername());
+        Cards card = decksController.randonCard(u);
         getCurrentPlayer().addCardToAvailableCards(card);                
     }
     
@@ -120,10 +124,10 @@ public class BattleField {
         Chars c = null;
         PlayerFighter pf = null;
         try {
-            c = userController.getPlayerChar(player.getUsername());            
+            c = charsController.getPlayerChar(player.getUsername());            
             pf = new PlayerFighter(player.getUsername(), c);
-            Users u = userController.getUserByName(player.getUsername());
-            pf.setAvailableCards(deckController.randonCards(u));
+            Users u = usersController.getUserByUsername(player.getUsername());
+            pf.setAvailableCards(decksController.randonCards(u));
         } catch(Exception e) { 
             System.out.println(e);
         }
@@ -131,7 +135,7 @@ public class BattleField {
     }
 
     private boolean checkAnswer(Cards card, int answer_id) {
-        CardController cardController = new CardController();
+        CardsController cardController = new CardsController();
         int correctAnswer = cardController.getCorretAnswer(card);         
         return correctAnswer == answer_id;
     }
