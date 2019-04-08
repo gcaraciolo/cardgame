@@ -1,7 +1,7 @@
 package br.unicap.cardgame.ws;
 
 import br.unicap.cardgame.app.Secured;
-import br.unicap.cardgame.jax.bean.MoveGameJAXBean;
+import br.unicap.cardgame.ws.request.MoveGameJAXBean;
 import br.unicap.cardgame.engine.BattleFieldController;
 import br.unicap.cardgame.model.Player;
 import br.unicap.cardgame.util.Utils;

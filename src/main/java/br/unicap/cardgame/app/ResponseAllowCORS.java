@@ -11,10 +11,11 @@ import javax.ws.rs.ext.Provider;
 public class ResponseAllowCORS implements ContainerResponseFilter {
     
    @Override
-   public void filter(final ContainerRequestContext requestContext,
-                      final ContainerResponseContext cres) throws IOException {
-        
-        allowCORS(cres);      
+   public void filter(
+      final ContainerRequestContext requestContext,
+      final ContainerResponseContext cres
+   ) throws IOException {
+      allowCORS(cres);
    }
    
     private void allowCORS(ContainerResponseContext cres) {

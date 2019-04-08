@@ -10,13 +10,12 @@ import br.unicap.cardgame.model.Chars;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-
 @Stateless
 public class CharsController {
-    
+
     @EJB
     private CharsDAO charDAO;
-    
+
     public Chars getPlayerChar(String username) {
         return charDAO.getPlayerChar(username);
     }

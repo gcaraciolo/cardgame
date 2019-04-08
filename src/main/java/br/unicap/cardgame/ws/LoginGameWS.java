@@ -1,7 +1,7 @@
 package br.unicap.cardgame.ws;
 
 import br.unicap.cardgame.controller.UsersController;
-import br.unicap.cardgame.jax.bean.LoginGameJAXBean;
+import br.unicap.cardgame.ws.request.LoginGameJAXBean;
 import br.unicap.cardgame.ws.response.CardGameResponseToken;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
